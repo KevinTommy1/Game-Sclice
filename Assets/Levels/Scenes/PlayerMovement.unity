@@ -398,6 +398,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1294394671676491050, guid: 60bb5daa3433ccc499c527ef14aaacd1, type: 3}
+      propertyPath: jumpHeight
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1294394671676491050, guid: 60bb5daa3433ccc499c527ef14aaacd1, type: 3}
       propertyPath: frictionMultiplier
       value: 20
       objectReference: {fileID: 0}
