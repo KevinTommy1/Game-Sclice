@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping = false; 
     private bool jumpKeyDown = false;
     private bool jumpKeyUp = false;
+    private bool facingRight = false;
 
     [SerializeField] private float jumpHeight;
     [SerializeField] private float size = 1;
@@ -41,7 +42,36 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         if(rb == null) return;
+        TurnCheck();
         Movement();
+    }
+
+    private void TurnCheck()
+    {
+        //if (Math.Abs(Input.GetAxis("Horizontal")) < 0.01f) return;
+        if (Input.GetAxis("Horizontal") > 0.05f && !facingRight)
+        {
+            Turn();
+        }
+        else if (Input.GetAxis("Horizontal") < -0.05f && facingRight)
+        {
+            Turn();
+        }
+    }
+
+    private void Turn()
+    {
+        print("Turn");
+        if (facingRight)
+        {
+            transform.rotation = Quaternion.Euler(transform.rotation.x, 180f, transform.rotation.z);
+            facingRight = false;
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
+            facingRight = true;
+        }
     }
 
     //Input.GetButtonDown("Jump")
