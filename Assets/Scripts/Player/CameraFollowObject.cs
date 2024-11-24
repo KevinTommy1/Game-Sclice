@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraFollowObject : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private Transform playerTransform;
     void Start()
     {
         
