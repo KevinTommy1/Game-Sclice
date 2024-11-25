@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +15,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float size = 1;
     [SerializeField] public float maxSpeed = 10f;
     [SerializeField] private float jumpForce = 10f;
-    
+
+    [Header("Dashing")]
+    [SerializeField] private float dashingVelocity = 14f;
+    [SerializeField] private float dashDistance = 2f;
+    [SerializeField] private float dashingTime = 0.5f;
+
+    private Vector2 dashingDirection;
+    private bool isDashing;
+    private bool canDash = true;
+
     private void Start()
     {
         if (!TryGetComponent(out rb))
@@ -35,23 +43,32 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpKeyUp = true;
         }
-    }
 
+        var dashInput = Input.GetButtonDown("Dash");
+
+        if (dashInput && canDash)
+        {
+            isDashing = true;
+            canDash = false;
+            dashingDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            if (dashingDirection == Vector2.zero)
+            {
+                dashingDirection = new Vector2(transform.localScale.x, 0);
+            }
+            StartCoroutine(StopDashing());
+        }
+    }
 
     private void FixedUpdate()
     {
-        if(rb == null) return;
+        if (rb == null) return;
         Movement();
     }
 
-    //Input.GetButtonDown("Jump")
-    /// <summary>
-    /// Handles the player's movement.
-    /// </summary>
     private void Movement()
     {
         Vector2 newVelocity;
-        
+
         if (jumpKeyDown)
         {
             if (IsGrounded())
@@ -66,28 +83,41 @@ public class PlayerMovement : MonoBehaviour
         }
 
         elevationGained = transform.position.y - jumpStartPos;
-        if (elevationGained > jumpHeight || jumpKeyUp){
+        if (elevationGained > jumpHeight || jumpKeyUp)
+        {
             print("Fall");
             print("Elevation gained: " + elevationGained);
             isJumping = false;
             jumpKeyUp = false;
         }
-        
-        
-        float moveX = Input.GetAxis("Horizontal") * maxSpeed;
-        newVelocity.x = moveX;
-        newVelocity.y = isJumping? jumpForce : -jumpForce;
-        rb.velocity = newVelocity;
+
+        if (isDashing)
+        {
+            rb.velocity = dashingDirection.normalized * dashingVelocity;
+        }
+        else
+        {
+            float moveX = Input.GetAxis("Horizontal") * maxSpeed;
+            newVelocity.x = moveX;
+            newVelocity.y = isJumping ? jumpForce : -jumpForce;
+            rb.velocity = newVelocity;
+        }
+
+        if (IsGrounded())
+        {
+            canDash = true;
+        }
     }
-    
-    /// <summary>
-    /// Checks if the player is grounded.
-    /// Does a raycast down from the player's position and checks if the ray hits a collider.
-    /// Also checks if the player's vertical velocity is zero.
-    /// </summary>
+
+    private IEnumerator StopDashing()
+    {
+        yield return new WaitForSeconds(dashingTime);
+        isDashing = false;
+    }
+
     public bool IsGrounded()
     {
-        Debug.DrawRay( transform.position + Vector3.down * size, Vector2.down * 2f, Color.red);
+        Debug.DrawRay(transform.position + Vector3.down * size, Vector2.down * 2f, Color.red);
         return Physics2D.Raycast(transform.position + Vector3.down * size, Vector2.down, 0.1f).collider != null && rb.velocity.y == 0;
     }
 }
