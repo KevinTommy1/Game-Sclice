@@ -5,11 +5,16 @@ using UnityEngine;
 public class PlayerDashing : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private bool isDashing = false;
-    private Vector2 dashDirection;
-
-    [SerializeField] private float dashDistance = 5f;
-    [SerializeField] private float dashDuration = 0.5f;
+    private PlayerMovement playerMovement;
+    
+    [Header("Dashing")] 
+    [SerializeField] private float dashingVelocity = 14f;
+    [SerializeField] private float dashDistance = 2f;
+    [SerializeField] private float dashingTime = 0.5f;
+    
+    private Vector2 dashingDirection;
+    private bool isDashing;
+    private bool canDash = true;
 
     private void Start()
     {
@@ -17,43 +22,44 @@ public class PlayerDashing : MonoBehaviour
         {
             Debug.LogError("Rigidbody2D not found on " + gameObject.name);
         }
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (rb == null) return;
-        Dash();
-    }
+        var inputX = Input.GetAxisRaw("Horizontal");
+        var dashInput = Input.GetButtonDown("Dash");
 
-    /// <summary>
-    /// Initiates a dash movement when the Left Shift key is pressed. 
-    /// Sets the dash direction based on current horizontal and vertical input 
-    /// and starts the dash coroutine if not already dashing.
-    /// </summary>
-    private void Dash()
-    {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
+        if (dashInput && canDash)
         {
             isDashing = true;
-            dashDirection = new Vector2(Input.GetAxis("Horizontal"), 0f);
-            StartCoroutine(DashCoroutine());
+            canDash = false;
+            dashingDirection = new Vector2(inputX, Input.GetAxisRaw("Vertical"));
+            if (dashingDirection == Vector2.zero)
+            {
+                dashingDirection = new Vector2(transform.localScale.x, 0);
+            }
+            StartCoroutine(StopDashing());
+        }
+
+        if (isDashing)
+        {
+            rb.velocity = dashingDirection.normalized * dashingVelocity;
+            return;
+        }
+
+        if (playerMovement.IsGrounded())
+        {
+            canDash = true;
         }
     }
 
-    IEnumerator DashCoroutine()
+    private IEnumerator StopDashing()
     {
-        float elapsedTime = 0f;
-
-        while (elapsedTime < dashDuration)
-        {
-            float t = Time.deltaTime / dashDuration;
-
-            rb.transform.position = Vector2.Lerp(rb.transform.position, dashDirection * dashDistance, t);
-
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
+        yield return new WaitForSeconds(dashingTime);
         isDashing = false;
     }
+    
+
+
 }

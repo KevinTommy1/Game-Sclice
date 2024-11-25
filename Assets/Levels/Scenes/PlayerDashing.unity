@@ -352,9 +352,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1971792281472476401, guid: 60bb5daa3433ccc499c527ef14aaacd1, type: 3}
+      propertyPath: dashDistance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971792281472476401, guid: 60bb5daa3433ccc499c527ef14aaacd1, type: 3}
+      propertyPath: dashingVelocity
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 3404275623777843720, guid: 60bb5daa3433ccc499c527ef14aaacd1, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3687398502885057350, guid: 60bb5daa3433ccc499c527ef14aaacd1, type: 3}
+      propertyPath: maxSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3687398502885057350, guid: 60bb5daa3433ccc499c527ef14aaacd1, type: 3}
+      propertyPath: jumpHeight
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 9020279265947866888, guid: 60bb5daa3433ccc499c527ef14aaacd1, type: 3}
       propertyPath: m_LocalPosition.x

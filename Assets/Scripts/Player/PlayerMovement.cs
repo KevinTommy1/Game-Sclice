@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float jumpHeight;
     [SerializeField] private float size = 1;
-    [SerializeField] private float maxSpeed = 10f;
+    [SerializeField] public float maxSpeed = 10f;
     [SerializeField] private float jumpForce = 10f;
     
     private void Start()
@@ -80,12 +80,12 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = newVelocity;
     }
     
-    /// <summary>àa
+    /// <summary>
     /// Checks if the player is grounded.
     /// Does a raycast down from the player's position and checks if the ray hits a collider.
     /// Also checks if the player's vertical velocity is zero.
     /// </summary>
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         Debug.DrawRay( transform.position + Vector3.down * size, Vector2.down * 2f, Color.red);
         return Physics2D.Raycast(transform.position + Vector3.down * size, Vector2.down, 0.1f).collider != null && rb.velocity.y == 0;
