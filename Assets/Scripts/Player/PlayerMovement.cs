@@ -115,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
     }
 
-    public bool IsGrounded()
+    private bool IsGrounded()
     {
         Debug.DrawRay(transform.position + Vector3.down * size, Vector2.down * 2f, Color.red);
         return Physics2D.Raycast(transform.position + Vector3.down * size, Vector2.down, 0.1f).collider != null && rb.velocity.y == 0;
