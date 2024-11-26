@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private static readonly int Dash = Animator.StringToHash("Dash");
+    private static readonly int Jump = Animator.StringToHash("Jump");
+    private static readonly int Fall = Animator.StringToHash("Fall");
+    private static readonly int Walk = Animator.StringToHash("Walk");
     private Rigidbody2D rb;
+    private Animator anim;
     private float jumpStartPos = 9999f;
     private float elevationGained = 0f;
     private bool isJumping = false; 
@@ -24,12 +29,18 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 dashingDirection;
     private bool isDashing;
     private bool canDash = true;
-
+    
+    
     private void Start()
     {
         if (!TryGetComponent(out rb))
         {
             Debug.LogError("No RigidBody2D on " + gameObject.name);
+        }
+
+        if (!TryGetComponent(out anim))
+        {
+            Debug.LogError("No Animator on " + gameObject.name);
         }
     }
 
@@ -51,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
             isDashing = true;
             canDash = false;
             dashingDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            anim.SetTrigger(Dash);
             if (dashingDirection == Vector2.zero)
             {
                 dashingDirection = new Vector2(transform.localScale.x, 0);
@@ -67,8 +79,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
-        Vector2 newVelocity;
-
         if (jumpKeyDown)
         {
             if (IsGrounded())
@@ -76,6 +86,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 jumpStartPos = transform.position.y;
                 isJumping = true;
+                anim.SetTrigger(Jump);
             }
 
             print("Jump");
@@ -89,6 +100,7 @@ public class PlayerMovement : MonoBehaviour
             print("Elevation gained: " + elevationGained);
             isJumping = false;
             jumpKeyUp = false;
+            anim.SetTrigger(Fall);
         }
 
         if (isDashing)
@@ -98,9 +110,11 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             float moveX = Input.GetAxis("Horizontal") * maxSpeed;
+            Vector2 newVelocity;
             newVelocity.x = moveX;
             newVelocity.y = isJumping ? jumpForce : -jumpForce;
             rb.velocity = newVelocity;
+            anim.SetTrigger(Walk);
         }
 
         if (IsGrounded())
