@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float jumpHeight;
     [SerializeField] private float size = 1;
-    [SerializeField] public float maxSpeed = 10f;
+    [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private float jumpForce = 10f;
 
     [Header("Dashing")]
