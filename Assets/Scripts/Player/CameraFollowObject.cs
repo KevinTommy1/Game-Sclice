@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraFollowObject : MonoBehaviour
 {
+    private Vector3 offset;
     [SerializeField] private Transform playerTransform;
     void Start()
     {

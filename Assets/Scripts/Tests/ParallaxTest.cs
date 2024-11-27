@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ParallaxTest : MonoBehaviour
 {
-    [Range(-20.0f,20.0f)] public float x;
+    [Range(-40.0f,40.0f)] public float x;
     // Update is called once per frame
     private void FixedUpdate()
     {
