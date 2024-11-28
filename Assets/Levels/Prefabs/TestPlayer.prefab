@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3572475263273016210}
   - component: {fileID: 8224430303388929554}
   - component: {fileID: 1698889524490382574}
-  - component: {fileID: 1294394671676491050}
+  - component: {fileID: 3687398502885057350}
   m_Layer: 0
   m_Name: TestPlayer
   m_TagString: Untagged
@@ -234,7 +234,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
---- !u!114 &1294394671676491050
+--- !u!114 &3687398502885057350
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -246,7 +246,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31a6c41f36f58974eb6f4c68b670e082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpHeight: 15
+  jumpHeight: 10
   size: 1
   maxSpeed: 10
-  jumpForce: 5
+  jumpForce: 10
+  dashingVelocity: 14
+  dashDistance: 2
+  dashingTime: 0.5
