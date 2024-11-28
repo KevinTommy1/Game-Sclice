@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashDistance = 2f;
     [SerializeField] private float dashingTime = 0.5f;
 
+    private Vector2 lastMovementDirection = new(1, 0);
     private Vector2 dashingDirection;
     private bool isDashing;
     private bool canDash = true;
@@ -46,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        Movement();
         if (!jumpKeyDown && Input.GetKeyDown(KeyCode.Space))
         {
             jumpKeyDown = true;
@@ -58,25 +60,22 @@ public class PlayerMovement : MonoBehaviour
 
         var dashInput = Input.GetButtonDown("Dash");
 
-        if (dashInput && canDash)
+        if (!dashInput || !canDash) return;
+        isDashing = true;
+        canDash = false;
+        dashingDirection = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
+        //anim.SetTrigger(Dash);
+        if (dashingDirection == Vector2.zero)
         {
-            isDashing = true;
-            canDash = false;
-            dashingDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-            //anim.SetTrigger(Dash);
-            if (dashingDirection == Vector2.zero)
-            {
-                dashingDirection = new Vector2(transform.localScale.x, 0);
-            }
-
-            StartCoroutine(StopDashing());
+            dashingDirection = lastMovementDirection;
         }
+
+        StartCoroutine(StopDashing());
     }
 
     private void FixedUpdate()
     {
         if (rb == null) return;
-        Movement();
     }
 
     private void Movement()
@@ -105,6 +104,7 @@ public class PlayerMovement : MonoBehaviour
         if (isDashing)
         {
             rb.velocity = dashingDirection.normalized * dashingVelocity;
+            isJumping = false;
         }
         else
         {
@@ -114,6 +114,11 @@ public class PlayerMovement : MonoBehaviour
             newVelocity.y = isJumping ? jumpForce : -jumpForce;
             rb.velocity = newVelocity;
             //anim.SetTrigger(Walk);
+
+            if (moveX != 0)
+            {
+                lastMovementDirection = new Vector2(moveX, 0);
+            }
         }
 
         if (IsGrounded())
