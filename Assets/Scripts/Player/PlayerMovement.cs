@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -109,6 +110,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             float moveX = Input.GetAxis("Horizontal") * maxSpeed;
+            if(math.abs(moveX) < 0.8f) moveX = 0;
             Vector2 newVelocity;
             newVelocity.x = moveX;
             newVelocity.y = isJumping ? jumpForce : -jumpForce;
