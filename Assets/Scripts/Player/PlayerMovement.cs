@@ -12,7 +12,9 @@ public class PlayerMovement : MonoBehaviour
     //private static readonly int Dash = Animator.StringToHash("Dash");
     private static readonly int Jump = Animator.StringToHash("Jump");
     //private static readonly int Fall = Animator.StringToHash("Fall");
-    private static readonly int Walk = Animator.StringToHash("Walk");
+    private static readonly int WalkLeft = Animator.StringToHash("WalkLeft");
+    
+    private static readonly int WalkRight = Animator.StringToHash("WalkRight");
     
     [Header("Jumping & speed")]
     private float jumpStartPos = 9999f;
@@ -35,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 dashingDirection;
     private bool isDashing;
     private bool canDash = true;
+    private bool isMoving = false;
 
 
     private void Start()
@@ -90,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             jumpStartPos = transform.position.y;
             isJumping = true;
-            anim.SetTrigger(Jump);
+            //anim.SetTrigger(Jump);
             
             jumpKeyDown = false;
         }
@@ -116,7 +119,18 @@ public class PlayerMovement : MonoBehaviour
             newVelocity.x = moveX;
             newVelocity.y = isJumping ? jumpForce : -jumpForce;
             rb.velocity = newVelocity;
-            anim.SetTrigger(Walk);
+            if (moveX > 0)
+            {
+                anim.SetTrigger(WalkRight);
+            } else if (moveX < 0)
+            {
+                anim.SetTrigger(WalkLeft);
+            }
+            else
+            {
+                anim.SetTrigger(Idle);
+            }
+            // 
 
             if (moveX != 0)
             {
