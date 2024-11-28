@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Animation")]
-    //private Animator anim;
-    // private static readonly int Dash = Animator.StringToHash("Dash");
-    // private static readonly int Jump = Animator.StringToHash("Jump");
-    // private static readonly int Fall = Animator.StringToHash("Fall");
-    // private static readonly int Walk = Animator.StringToHash("Walk");
+    [Header("Animation")] 
+    [SerializeField] private Animator anim;
+    private static readonly int Idle = Animator.StringToHash("Idle");
+    //private static readonly int Dash = Animator.StringToHash("Dash");
+    private static readonly int Jump = Animator.StringToHash("Jump");
+    //private static readonly int Fall = Animator.StringToHash("Fall");
+    private static readonly int Walk = Animator.StringToHash("Walk");
     private Rigidbody2D rb;
 
     private float jumpStartPos = 9999f;
@@ -40,10 +41,10 @@ public class PlayerMovement : MonoBehaviour
             Debug.LogError("No RigidBody2D on " + gameObject.name);
         }
 
-        // if (!TryGetComponent(out anim))
-        // {
-        //     Debug.LogError("No Animator on " + gameObject.name);
-        // }
+        if (!TryGetComponent(out anim))
+        {
+            Debug.LogError("No Animator on " + gameObject.name);
+        }
     }
 
     private void Update()
@@ -110,12 +111,12 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             float moveX = Input.GetAxis("Horizontal") * maxSpeed;
-            if(math.abs(moveX) < 0.8f) moveX = 0;
+            if (math.abs(moveX) < 0.8f) moveX = 0;
             Vector2 newVelocity;
             newVelocity.x = moveX;
             newVelocity.y = isJumping ? jumpForce : -jumpForce;
             rb.velocity = newVelocity;
-            //anim.SetTrigger(Walk);
+            anim.SetTrigger(Walk);
 
             if (moveX != 0)
             {
