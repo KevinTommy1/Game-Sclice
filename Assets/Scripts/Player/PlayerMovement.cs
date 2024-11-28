@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -10,11 +9,11 @@ public class PlayerMovement : MonoBehaviour
     // private static readonly int Jump = Animator.StringToHash("Jump");
     // private static readonly int Fall = Animator.StringToHash("Fall");
     // private static readonly int Walk = Animator.StringToHash("Walk");
-    
     private Rigidbody2D rb;
+
     private float jumpStartPos = 9999f;
     private float elevationGained = 0f;
-    private bool isJumping = false; 
+    private bool isJumping = false;
     private bool jumpKeyDown = false;
     private bool jumpKeyUp = false;
 
@@ -23,16 +22,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private float jumpForce = 10f;
 
-    [Header("Dashing")]
-    [SerializeField] private float dashingVelocity = 14f;
+    [Header("Dashing")] [SerializeField] private float dashingVelocity = 14f;
     [SerializeField] private float dashDistance = 2f;
     [SerializeField] private float dashingTime = 0.5f;
 
     private Vector2 dashingDirection;
     private bool isDashing;
     private bool canDash = true;
-    
-    
+
+
     private void Start()
     {
         if (!TryGetComponent(out rb))
@@ -52,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpKeyDown = true;
         }
+
         if (!jumpKeyUp && Input.GetKeyUp(KeyCode.Space))
         {
             jumpKeyUp = true;
@@ -69,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 dashingDirection = new Vector2(transform.localScale.x, 0);
             }
+
             StartCoroutine(StopDashing());
         }
     }
@@ -81,15 +81,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
-        if (jumpKeyDown)
+        if (jumpKeyDown && IsGrounded())
         {
-            if (IsGrounded())
-            {
-                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-                jumpStartPos = transform.position.y;
-                isJumping = true;
-                //anim.SetTrigger(Jump);
-            }
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            jumpStartPos = transform.position.y;
+            isJumping = true;
+            //anim.SetTrigger(Jump);
 
             print("Jump");
             jumpKeyDown = false;
@@ -134,6 +131,7 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGrounded()
     {
         Debug.DrawRay(transform.position + Vector3.down * size, Vector2.down * 2f, Color.red);
-        return Physics2D.Raycast(transform.position + Vector3.down * size, Vector2.down, 0.1f).collider != null && rb.velocity.y == 0;
+        return Physics2D.Raycast(transform.position + Vector3.down * size, Vector2.down, 0.1f).collider != null &&
+               rb.velocity.y == 0;
     }
 }
