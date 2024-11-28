@@ -14,6 +14,7 @@ public class CameraFollowObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.position = playerTransform.position;
+        Mathf.Lerp(2,4, 0.5f);
     }
 }
