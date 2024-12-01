@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Animation")]
-    //private Animator anim;
-    // private static readonly int Dash = Animator.StringToHash("Dash");
-    // private static readonly int Jump = Animator.StringToHash("Jump");
-    // private static readonly int Fall = Animator.StringToHash("Fall");
-    // private static readonly int Walk = Animator.StringToHash("Walk");
     private Rigidbody2D rb;
-
+    
+    [Header("Animation")] 
+    [SerializeField] private Animator anim;
+    private static readonly int Idle = Animator.StringToHash("Idle");
+    //private static readonly int Dash = Animator.StringToHash("Dash");
+    private static readonly int Jump = Animator.StringToHash("Jump");
+    //private static readonly int Fall = Animator.StringToHash("Fall");
+    private static readonly int WalkLeft = Animator.StringToHash("WalkLeft");
+    
+    private static readonly int WalkRight = Animator.StringToHash("WalkRight");
+    
+    [Header("Jumping & speed")]
     private float jumpStartPos = 9999f;
     private float elevationGained = 0f;
     private bool isJumping = false;
@@ -23,7 +28,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private float jumpForce = 10f;
 
-    [Header("Dashing")] [SerializeField] private float dashingVelocity = 14f;
+    [Header("Dashing")] 
+    [SerializeField] private float dashingVelocity = 14f;
     [SerializeField] private float dashDistance = 2f;
     [SerializeField] private float dashingTime = 0.5f;
 
@@ -31,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 dashingDirection;
     private bool isDashing;
     private bool canDash = true;
+    private bool isMoving = false;
 
 
     private void Start()
@@ -40,10 +47,10 @@ public class PlayerMovement : MonoBehaviour
             Debug.LogError("No RigidBody2D on " + gameObject.name);
         }
 
-        // if (!TryGetComponent(out anim))
-        // {
-        //     Debug.LogError("No Animator on " + gameObject.name);
-        // }
+        if (!TryGetComponent(out anim))
+        {
+            Debug.LogError("No Animator on " + gameObject.name);
+        }
     }
 
     private void Update()
@@ -87,16 +94,13 @@ public class PlayerMovement : MonoBehaviour
             jumpStartPos = transform.position.y;
             isJumping = true;
             //anim.SetTrigger(Jump);
-
-            print("Jump");
+            
             jumpKeyDown = false;
         }
 
         elevationGained = transform.position.y - jumpStartPos;
         if (elevationGained > jumpHeight || jumpKeyUp)
         {
-            print("Fall");
-            print("Elevation gained: " + elevationGained);
             isJumping = false;
             jumpKeyUp = false;
             //anim.SetTrigger(Fall);
@@ -110,12 +114,23 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             float moveX = Input.GetAxis("Horizontal") * maxSpeed;
-            if(math.abs(moveX) < 0.8f) moveX = 0;
+            if (math.abs(moveX) < 0.8f) moveX = 0;
             Vector2 newVelocity;
             newVelocity.x = moveX;
             newVelocity.y = isJumping ? jumpForce : -jumpForce;
             rb.velocity = newVelocity;
-            //anim.SetTrigger(Walk);
+            if (moveX > 0)
+            {
+                anim.SetTrigger(WalkRight);
+            } else if (moveX < 0)
+            {
+                anim.SetTrigger(WalkLeft);
+            }
+            else
+            {
+                anim.SetTrigger(Idle);
+            }
+            // 
 
             if (moveX != 0)
             {
