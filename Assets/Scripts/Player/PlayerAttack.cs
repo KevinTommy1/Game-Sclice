@@ -20,6 +20,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Attack()
     {
+        if (!Input.GetKeyDown("fire1")) return;
         hit = Physics2D.Raycast(transform.position, transform.right, 1f, LayerMask.GetMask("Enemy", "Geo"));
         if (!hit) return;
         Debug.Log(hit.transform.name);
