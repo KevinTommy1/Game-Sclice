@@ -19,9 +19,13 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jumping & speed")]
     private float jumpStartPos = 9999f;
     private float elevationGained = 0f;
+    private float yPosLastFrame = 0f;
     private bool isJumping = false;
     private bool jumpKeyDown = false;
     private bool jumpKeyUp = false;
+    
+    private bool grounded = false;
+    private bool falling = false;
 
     [SerializeField] private float jumpHeight;
     [SerializeField] private float size = 1;
@@ -39,6 +43,8 @@ public class PlayerMovement : MonoBehaviour
     private bool canDash = true;
     private bool isMoving = false;
 
+    public bool isFacingRight;
+
 
     private void Start()
     {
@@ -55,6 +61,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        grounded = IsGrounded();
+        falling = IsFalling();
+        
+      //  print(grounded);
         Movement();
         if (!jumpKeyDown && Input.GetKeyDown(KeyCode.Space))
         {
@@ -67,6 +77,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         var dashInput = Input.GetButtonDown("Dash");
+        
+        //need to calculate velocity manually because "newVelocity.y = isJumping ? jumpForce : -jumpForce;"
 
         if (!dashInput || !canDash) return;
         isDashing = true;
@@ -84,16 +96,17 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         if (rb == null) return;
+        yPosLastFrame = transform.position.y;
     }
 
     private void Movement()
     {
-        if (jumpKeyDown && IsGrounded())
+        if (jumpKeyDown && grounded)
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             jumpStartPos = transform.position.y;
             isJumping = true;
-            //anim.SetTrigger(Jump);
+            ////anim.SetTrigger(Jump);
             
             jumpKeyDown = false;
         }
@@ -103,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isJumping = false;
             jumpKeyUp = false;
-            //anim.SetTrigger(Fall);
+            ////anim.SetTrigger(Fall);
         }
 
         if (isDashing)
@@ -119,17 +132,20 @@ public class PlayerMovement : MonoBehaviour
             newVelocity.x = moveX;
             newVelocity.y = isJumping ? jumpForce : -jumpForce;
             rb.velocity = newVelocity;
-            if (moveX > 0)
-            {
-                anim.SetTrigger(WalkRight);
-            } else if (moveX < 0)
-            {
-                anim.SetTrigger(WalkLeft);
-            }
-            else
-            {
-                anim.SetTrigger(Idle);
-            }
+            HandleAnimation(moveX);
+            //if (moveX > 0)
+            //{
+            //    isFacingRight = true;
+            //    anim.SetTrigger(WalkRight);
+            //} else if (moveX < 0)
+            //{
+            //    isFacingRight = false;
+            //    anim.SetTrigger(WalkLeft);
+            //}
+            //else
+            //{
+            //    anim.SetTrigger(Idle);
+            //}
             // 
 
             if (moveX != 0)
@@ -138,9 +154,52 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (IsGrounded())
+        if (grounded)
         {
             canDash = true;
+        }
+    }
+
+
+    private void HandleAnimation(float inputX)
+    {
+        if (isDashing)
+        {
+            //anim.SetTrigger(Dash);
+            return;
+        }
+
+        if (grounded)
+        {
+            //print(inputX);
+            if (inputX < 0)
+            {
+                isFacingRight = false;
+                print("walking left");
+                anim.SetTrigger(WalkLeft);
+            }
+            else if (inputX > 0)
+            {
+                isFacingRight = true;
+                print("walking right");
+
+                anim.SetTrigger(WalkRight);
+            }
+            else
+            {
+                anim.SetTrigger(Idle);
+            }
+        }
+        else
+        {
+            if (isJumping)
+            {
+                //anim.SetTrigger(Jump);
+            }
+            else
+            {
+                //anim.SetTrigger(Fall);
+            }
         }
     }
 
@@ -152,8 +211,26 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        Debug.DrawRay(transform.position + Vector3.down * size, Vector2.down * 2f, Color.red);
-        return Physics2D.Raycast(transform.position + Vector3.down * size, Vector2.down, 0.1f).collider != null &&
-               rb.velocity.y == 0;
+        Debug.DrawRay(transform.position + Vector3.down * size, Vector2.down * 0.1f, Color.red);
+        bool grounded= Physics2D.Raycast(transform.position + Vector3.down * size, Vector2.down, 0.1f).collider != null && 
+                       // this means velocity on y is 0
+                       yPosLastFrame == transform.position.y;
+
+        if(grounded)
+        {
+            Debug.Log($"{transform.position.y - yPosLastFrame}"); // {yPosLastFrame} {transform.position.y}");
+        }
+        return grounded;
     }
+
+    private bool IsFalling()
+    {
+        return true;
+    }
+    //private bool IsGrounded(Color kleur)
+    //{
+    //    Debug.DrawRay(transform.position + Vector3.down * size, Vector2.down * 2f, kleur);
+    //    return Physics2D.Raycast(transform.position + Vector3.down * size, Vector2.down, 0.1f).collider != null &&
+    //           rb.velocity.y == 0;
+    //}
 }

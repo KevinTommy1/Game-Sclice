@@ -3,24 +3,50 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
-[RequireComponent(typeof())]
+[RequireComponent(typeof(CinemachineVirtualCamera))]
 
 public class CameraFollowObject : MonoBehaviour
 {
     private Vector3 offset;
     private CinemachineVirtualCamera vcam;
     private CinemachineFramingTransposer transposer;
-    [SerializeField] private Transform playerTransform;
+    private PlayerMovement playerMovement;
+    private bool lastFacingDirection = false;
+    [SerializeField] private GameObject player;
     void Start()
     {
-        vcam = GetComponent<CinemachineVirtualCamera>();
-        transposer = vcam.GetCinemachineComponent<CinemachineFramingTransposer>();
+        if (!TryGetComponent(out vcam))
+        {
+            Debug.LogError("No VirtualCamera on " + gameObject.name);
+        }
+        else
+        {
+        }
+            transposer = vcam.GetCinemachineComponent<CinemachineFramingTransposer>();
+
+        if (!player.TryGetComponent(out playerMovement))
+        {
+            Debug.LogError($"No PlayerMovement on {player.name}, or given gameobject isn't the player");
+        }
+        else{lastFacingDirection = playerMovement.isFacingRight;}
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = playerTransform.position;
+        transform.position = player.transform.position;
         transposer.m_TrackedObjectOffset = offset;
+        
+        // check if facing direction has changed, if so, update cameraOffset
+        if (lastFacingDirection!= playerMovement.isFacingRight)
+        {
+            lastFacingDirection = playerMovement.isFacingRight;
+            ChangeCameraOffset();
+        }
+    }
+
+    private void ChangeCameraOffset()
+    {
+        throw new System.NotImplementedException();
     }
 }
