@@ -7,15 +7,14 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private PlayerState currentState = PlayerState.Idle;
 
-    [Header("Dashing")]
-    [SerializeField] private bool isDashing;
+    [Header("Dashing")] [SerializeField] private bool isDashing;
     [SerializeField] private bool canDash;
-    [SerializeField] private bool canTakeDamage = true;
     [SerializeField] private float dashingTime = 0.5f;
-    
-    [Header("Movement")]
-    [SerializeField] private float movementSpeed;
-    
+    [SerializeField] private float dashingVelocity = 10f;
+    [SerializeField] private Vector2 dashingDirection;
+    [SerializeField] private bool canTakeDamage = true;
+
+    [Header("Movement")] [SerializeField] private float movementSpeed;
 
 
     private void Start()
@@ -33,24 +32,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleMovement()
     {
-        if (isDashing) return;
         if (Input.GetAxisRaw("Horizontal") >= 1)
         {
             currentState = PlayerState.MovingRight;
+            dashingDirection = Vector2.right;
         }
         else if (Input.GetAxisRaw("Horizontal") <= -1)
         {
             currentState = PlayerState.MovingLeft;
+            dashingDirection = Vector2.left;
+        }
+        else if (Input.GetAxisRaw("Dash") >= 1 && canDash && !isDashing)
+        {
+            currentState = PlayerState.Dashing;
         }
         else
         {
             currentState = PlayerState.Idle;
         }
 
-        if (Input.GetAxisRaw("Fire3") >= 1 && canDash && !isDashing)
-        {
-            // Perform dashing
-        }
         HandleState();
     }
 
@@ -65,23 +65,25 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector2(movementSpeed, rb.velocity.y);
                 break;
             case PlayerState.Dashing:
-                // Make dashing logic
+                rb.velocity = new Vector2(dashingVelocity * dashingDirection.x, rb.velocity.y);
+                canDash = false;
+                isDashing = true;
+                StartCoroutine(DashTimer());
                 break;
             case PlayerState.Idle:
-                rb.velocity = new Vector2(0, rb.velocity.y);
-                break;
             default:
                 rb.velocity = new Vector2(0, rb.velocity.y);
                 break;
         }
     }
     
-    
-    // make dashing method
-    public void Dash()
+    private IEnumerator DashTimer()
     {
-        
+        yield return new WaitForSeconds(dashingTime);
+        canDash = true;
+        isDashing = false;
     }
+    
 
     private enum PlayerState
     {
