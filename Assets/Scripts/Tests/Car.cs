@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 // <summary>
 // showcase of inheritance, interfaces and polymorphism
 // </summary>
@@ -61,4 +63,10 @@ public class Bee : Animal
 {
 	public override void Move() => Debug.Log("Fly");
 	public override void kick() => Debug.Log("kick");
+}
+
+//[Serializable]
+public class test : UnityEvent<int, int>
+{
+	
 }

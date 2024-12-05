@@ -4,10 +4,11 @@ public class SetGOToPos : MonoBehaviour
 {
     [SerializeField] private bool activate;
     [SerializeField] private bool continuous;
-    [SerializeField] private Vector2 location;
+     private Vector2 location;
 
     private void Start()
     {
+        location = transform.position;
         activate = false;
         continuous = false;
     }
