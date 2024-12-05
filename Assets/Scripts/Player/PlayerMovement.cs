@@ -45,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
         else if (Input.GetAxisRaw("Dash") >= 1 && canDash && !isDashing)
         {
             currentState = PlayerState.Dashing;
+            canTakeDamage = false;
         }
         else
         {
@@ -82,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(dashingTime);
         canDash = true;
         isDashing = false;
+        canTakeDamage = true;
     }
     
 
