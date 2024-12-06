@@ -1,3 +1,6 @@
+### link naar repo
+https://github.com/KevinTommy1/Game-Sclice/tree/UserTesting
+
 # Reference
 ## Opdracht 7 testplan schrijven
 
