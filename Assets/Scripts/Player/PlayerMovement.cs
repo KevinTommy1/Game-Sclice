@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    [SerializeField] private float movementSpeed = 5f; // Speed of player movement
+    [SerializeField] private float jumpHeight = 5f; // Height of player jump
+    [SerializeField] private float dashSpeed = 15f; // Speed of the dash
+    [SerializeField] private float dashLength = 0.3f; // Duration of the dash in seconds
+    [SerializeField] private bool isGrounded = false; // Tracks if the player is on the ground
+    [SerializeField] private Rigidbody2D rb; // Player's Rigidbody2D component
+    [SerializeField] private bool canTakeDamage = true; // Determines if the player can take damage
+    
+    private enum PlayerState { Idle, MovingLeft, MovingRight, Jumping, Dashing }
     private PlayerState currentState = PlayerState.Idle;
 
-    [Header("Dashing")] [SerializeField] private bool isDashing;
-    [SerializeField] private bool canDash;
-    [SerializeField] private float dashingTime = 0.5f;
-    [SerializeField] private float dashingVelocity = 10f;
-    [SerializeField] private Vector2 dashingDirection;
-    [SerializeField] private bool canTakeDamage = true;
-
-    [Header("Movement")] [SerializeField] private float movementSpeed;
-
-
+    private bool isDashing = false;
+    private int lastDirection = 0;
+    
     private void Start()
     {
         if (!TryGetComponent(out rb))
@@ -35,14 +36,14 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetAxisRaw("Horizontal") >= 1)
         {
             currentState = PlayerState.MovingRight;
-            dashingDirection = Vector2.right;
+            lastDirection = 1;
         }
         else if (Input.GetAxisRaw("Horizontal") <= -1)
         {
             currentState = PlayerState.MovingLeft;
-            dashingDirection = Vector2.left;
+            lastDirection = -1;
         }
-        else if (Input.GetAxisRaw("Dash") >= 1 && canDash && !isDashing)
+        else if (Input.GetAxisRaw("Dash") >= 1 && !isDashing)
         {
             currentState = PlayerState.Dashing;
             canTakeDamage = false;
@@ -66,8 +67,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector2(movementSpeed, rb.velocity.y);
                 break;
             case PlayerState.Dashing:
-                rb.velocity = new Vector2(dashingVelocity * dashingDirection.x, rb.velocity.y);
-                canDash = false;
+                rb.velocity = new Vector2(dashSpeed * lastDirection, rb.velocity.y);
                 isDashing = true;
                 StartCoroutine(DashTimer());
                 break;
@@ -80,21 +80,9 @@ public class PlayerMovement : MonoBehaviour
     
     private IEnumerator DashTimer()
     {
-        yield return new WaitForSeconds(dashingTime);
-        canDash = true;
+        yield return new WaitForSeconds(dashLength);
         isDashing = false;
         canTakeDamage = true;
     }
     
-
-    private enum PlayerState
-    {
-        Idle,
-        MovingLeft,
-        MovingRight,
-        FallingLeft,
-        FallingRight,
-        Jumping,
-        Dashing
-    }
 }
