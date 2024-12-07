@@ -51,16 +51,16 @@ public class PlayerMovement : MonoBehaviour
             currentState = PlayerState.MovingRight;
             lastDirection = 1;
         }
-        else if (Input.GetAxisRaw("Dash") >= 1 && !isDashing)
-        {
-            currentState = PlayerState.Dashing;
-            canTakeDamage = false;
-        }
         else
         {
             currentState = PlayerState.Idle;
         }
-
+        
+        if (Input.GetAxisRaw("Dash") >= 1 && !isDashing)
+        {
+            currentState = PlayerState.Dashing;
+            canTakeDamage = false;
+        }
         if (Input.GetAxisRaw("Jump") >= 1 && isGrounded)
         {
             currentState = PlayerState.Jumping;
