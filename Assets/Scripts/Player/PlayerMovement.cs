@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -22,9 +20,10 @@ public class PlayerMovement : MonoBehaviour
         Dashing
     }
 
-    private PlayerState currentState = PlayerState.Idle;
+    // Current state of the player
+    [SerializeField] private PlayerState currentState = PlayerState.Idle;
 
-    private bool isDashing = false;
+    [SerializeField] private bool isDashing = false;
     private int lastDirection = 0;
 
     private void Start()
@@ -65,7 +64,6 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetAxisRaw("Jump") >= 1 && isGrounded)
         {
             currentState = PlayerState.Jumping;
-            rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
         }
 
         HandleState();
