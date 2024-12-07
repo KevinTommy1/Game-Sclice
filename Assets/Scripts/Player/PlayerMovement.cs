@@ -120,23 +120,6 @@ public class PlayerMovement : MonoBehaviour
 
         isDashing = false;
         canTakeDamage = true;
-
-        if (isGrounded)
-        {
-            currentState = PlayerState.Idle;
-        }
-        else if (Input.GetAxisRaw("Horizontal") <= -1)
-        {
-            currentState = PlayerState.MovingLeft;
-        }
-        else if (Input.GetAxisRaw("Horizontal") >= 1)
-        {
-            currentState = PlayerState.MovingRight;
-        }
-        else
-        {
-            currentState = PlayerState.Idle;
-        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
