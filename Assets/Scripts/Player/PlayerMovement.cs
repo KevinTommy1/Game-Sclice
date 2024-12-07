@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
@@ -11,13 +12,21 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool isGrounded = false; // Tracks if the player is on the ground
     [SerializeField] private Rigidbody2D rb; // Player's Rigidbody2D component
     [SerializeField] private bool canTakeDamage = true; // Determines if the player can take damage
-    
-    private enum PlayerState { Idle, MovingLeft, MovingRight, Jumping, Dashing }
+
+    private enum PlayerState
+    {
+        Idle,
+        MovingLeft,
+        MovingRight,
+        Jumping,
+        Dashing
+    }
+
     private PlayerState currentState = PlayerState.Idle;
 
     private bool isDashing = false;
     private int lastDirection = 0;
-    
+
     private void Start()
     {
         if (!TryGetComponent(out rb))
@@ -33,15 +42,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleMovement()
     {
-        if (Input.GetAxisRaw("Horizontal") >= 1)
-        {
-            currentState = PlayerState.MovingRight;
-            lastDirection = 1;
-        }
-        else if (Input.GetAxisRaw("Horizontal") <= -1)
+        if (Input.GetAxisRaw("Horizontal") <= -1)
         {
             currentState = PlayerState.MovingLeft;
             lastDirection = -1;
+        }
+        else if (Input.GetAxisRaw("Horizontal") >= 1)
+        {
+            currentState = PlayerState.MovingRight;
+            lastDirection = 1;
         }
         else if (Input.GetAxisRaw("Dash") >= 1 && !isDashing)
         {
@@ -51,6 +60,12 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             currentState = PlayerState.Idle;
+        }
+
+        if (Input.GetAxisRaw("Jump") >= 1 && isGrounded)
+        {
+            currentState = PlayerState.Jumping;
+            rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
         }
 
         HandleState();
@@ -63,26 +78,84 @@ public class PlayerMovement : MonoBehaviour
             case PlayerState.MovingLeft:
                 rb.velocity = new Vector2(-movementSpeed, rb.velocity.y);
                 break;
+
             case PlayerState.MovingRight:
                 rb.velocity = new Vector2(movementSpeed, rb.velocity.y);
                 break;
+
+            case PlayerState.Jumping:
+                rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
+                isGrounded = false;
+                currentState = PlayerState.Idle; // Reset state after jump impulse
+                break;
             case PlayerState.Dashing:
-                rb.velocity = new Vector2(dashSpeed * lastDirection, rb.velocity.y);
-                isDashing = true;
-                StartCoroutine(DashTimer());
+                StartCoroutine(PerformDash());
                 break;
             case PlayerState.Idle:
-            default:
                 rb.velocity = new Vector2(0, rb.velocity.y);
                 break;
         }
     }
-    
-    private IEnumerator DashTimer()
+
+    private IEnumerator PerformDash()
     {
+        isDashing = true;
+        canTakeDamage = false;
+
+        // Lock Y axis to prevent falling while dashing
+        rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+
+        // Lock movement and determine dash direction using the last direction
+        float dashDirection = lastDirection;
+        if (dashDirection != 0)
+        {
+            rb.velocity = new Vector2(dashDirection * dashSpeed, rb.velocity.y);
+        }
+
         yield return new WaitForSeconds(dashLength);
+
+        // stop movement and reset contraints
+        rb.velocity = new Vector2(0, rb.velocity.y);
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
         isDashing = false;
         canTakeDamage = true;
+
+        if (isGrounded)
+        {
+            currentState = PlayerState.Idle;
+        }
+        else if (Input.GetAxisRaw("Horizontal") <= -1)
+        {
+            currentState = PlayerState.MovingLeft;
+        }
+        else if (Input.GetAxisRaw("Horizontal") >= 1)
+        {
+            currentState = PlayerState.MovingRight;
+        }
+        else
+        {
+            currentState = PlayerState.Idle;
+        }
     }
-    
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+            if (!isDashing)
+            {
+                currentState = PlayerState.Idle;
+            }
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
+    }
 }
