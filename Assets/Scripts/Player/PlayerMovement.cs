@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
             canTakeDamage = false;
         }
         HandleState();
-}
+    }
 
     private void HandleState()
     {
@@ -116,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
         float dashDirection = lastDirection;
         if (dashDirection != 0)
         {
-            rb.velocity = new Vector2(dashDirection * dashSpeed, rb.velocity.y);
+            rb.velocity = new Vector2(dashDirection * (dashSpeed * dashLength), rb.velocity.y);
         }
 
         yield return new WaitForSeconds(dashLength);
