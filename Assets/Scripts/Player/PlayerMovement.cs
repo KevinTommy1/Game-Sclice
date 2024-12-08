@@ -36,17 +36,28 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        HandleMovement();
+        HandleInput();
     }
 
-    private void HandleMovement()
+
+    private void HandleInput()
     {
-        if (Input.GetAxisRaw("Horizontal") <= -1)
+        var moveLeft = Input.GetAxisRaw("Horizontal") <= -1;
+        var moveRight = Input.GetAxisRaw("Horizontal") >= 1;
+        var jumpInput = Input.GetAxisRaw("Jump") >= 1;
+        var dashInput = Input.GetAxisRaw("Dash") >= 1;
+        
+        HandleMovement(moveLeft, moveRight, jumpInput, dashInput);
+    }
+
+    private void HandleMovement(bool moveLeft, bool moveRight, bool jumpInput, bool dashInput)
+    {
+        if (moveLeft)
         {
             currentState = PlayerState.MovingLeft;
             lastDirection = -1;
         }
-        else if (Input.GetAxisRaw("Horizontal") >= 1)
+        else if(moveRight)
         {
             currentState = PlayerState.MovingRight;
             lastDirection = 1;
@@ -55,19 +66,17 @@ public class PlayerMovement : MonoBehaviour
         {
             currentState = PlayerState.Idle;
         }
-        
-        if (Input.GetAxisRaw("Dash") >= 1 && !isDashing)
+        if (jumpInput && isGrounded)
+        {
+            currentState = PlayerState.Jumping;
+        }
+        if (dashInput && canTakeDamage)
         {
             currentState = PlayerState.Dashing;
             canTakeDamage = false;
         }
-        if (Input.GetAxisRaw("Jump") >= 1 && isGrounded)
-        {
-            currentState = PlayerState.Jumping;
-        }
-
         HandleState();
-    }
+}
 
     private void HandleState()
     {
