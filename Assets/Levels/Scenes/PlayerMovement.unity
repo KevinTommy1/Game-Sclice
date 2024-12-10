@@ -357,12 +357,20 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 3687398502885057350, guid: 60bb5daa3433ccc499c527ef14aaacd1, type: 3}
+      propertyPath: isDashing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3687398502885057350, guid: 60bb5daa3433ccc499c527ef14aaacd1, type: 3}
       propertyPath: dashLength
-      value: 0.3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3687398502885057350, guid: 60bb5daa3433ccc499c527ef14aaacd1, type: 3}
       propertyPath: currentState
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3687398502885057350, guid: 60bb5daa3433ccc499c527ef14aaacd1, type: 3}
+      propertyPath: canTakeDamage
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9020279265947866888, guid: 60bb5daa3433ccc499c527ef14aaacd1, type: 3}
       propertyPath: m_LocalPosition.x

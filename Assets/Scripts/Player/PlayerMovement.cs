@@ -5,8 +5,6 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float movementSpeed = 5f; // Speed of player movement
     [SerializeField] private float jumpHeight = 5f; // Height of player jump
-    [SerializeField] private float dashSpeed = 15f; // Speed of the dash
-    [SerializeField] private float dashLength = 0.3f; // Duration of the dash in seconds
     [SerializeField] private bool isGrounded = false; // Tracks if the player is on the ground
     [SerializeField] private Rigidbody2D rb; // Player's Rigidbody2D component
     [SerializeField] private bool canTakeDamage = true; // Determines if the player can take damage
@@ -17,7 +15,6 @@ public class PlayerMovement : MonoBehaviour
         MovingLeft,
         MovingRight,
         Jumping,
-        Dashing
     }
 
     // Current state of the player
@@ -45,12 +42,11 @@ public class PlayerMovement : MonoBehaviour
         var moveLeft = Input.GetAxisRaw("Horizontal") <= -1;
         var moveRight = Input.GetAxisRaw("Horizontal") >= 1;
         var jumpInput = Input.GetAxisRaw("Jump") >= 1;
-        var dashInput = Input.GetAxisRaw("Dash") >= 1;
         
-        HandleMovement(moveLeft, moveRight, jumpInput, dashInput);
+        HandleMovement(moveLeft, moveRight, jumpInput);
     }
 
-    private void HandleMovement(bool moveLeft, bool moveRight, bool jumpInput, bool dashInput)
+    private void HandleMovement(bool moveLeft, bool moveRight, bool jumpInput)
     {
         if (moveLeft)
         {
@@ -69,11 +65,6 @@ public class PlayerMovement : MonoBehaviour
         if (jumpInput && isGrounded)
         {
             currentState = PlayerState.Jumping;
-        }
-        if (dashInput && canTakeDamage)
-        {
-            currentState = PlayerState.Dashing;
-            canTakeDamage = false;
         }
         HandleState();
     }
@@ -95,38 +86,10 @@ public class PlayerMovement : MonoBehaviour
                 isGrounded = false;
                 currentState = PlayerState.Idle; // Reset state after jump impulse
                 break;
-            case PlayerState.Dashing:
-                StartCoroutine(PerformDash());
-                break;
             case PlayerState.Idle:
                 rb.velocity = new Vector2(0, rb.velocity.y);
                 break;
         }
-    }
-
-    private IEnumerator PerformDash()
-    {
-        isDashing = true;
-        canTakeDamage = false;
-
-        // Lock Y axis to prevent falling while dashing
-        rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
-
-        // Lock movement and determine dash direction using the last direction
-        float dashDirection = lastDirection;
-        if (dashDirection != 0)
-        {
-            rb.velocity = new Vector2(dashDirection * (dashSpeed * dashLength), rb.velocity.y);
-        }
-
-        yield return new WaitForSeconds(dashLength);
-
-        // stop movement and reset contraints
-        rb.velocity = new Vector2(0, rb.velocity.y);
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-
-        isDashing = false;
-        canTakeDamage = true;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
