@@ -104,11 +104,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (moveInput > 0 || moveInput < 0)
         {
-            //anim.SetBool("isWalking", true);
+            anim.SetBool("isWalking", true);
         }
         else
         {
-            //.SetBool("isWalking", false);
+            anim.SetBool("isWalking", false);
         }
 
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
@@ -123,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
             jumpTimeCounter = jumpTime;
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 
-            //anim.SetTrigger("jump");
+            anim.SetTrigger("jump");
         }
 
         //button is being held
@@ -203,7 +203,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator Reset()
     {
         yield return null;
-        //.ResetTrigger("land");
+        //anim.ResetTrigger("land");
     }
 
     #endregion
@@ -239,7 +239,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsFacingRight)
         {
-            Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
+            Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
             IsFacingRight = !IsFacingRight;
 
@@ -249,7 +249,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
+            Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
             IsFacingRight = !IsFacingRight;
 
