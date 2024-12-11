@@ -96,16 +96,16 @@ ScriptedImporter:
   rigSpriteImportData:
   - name: Hollow knight assets_0
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 1031
-      y: 1533
-      width: 600
-      height: 986
-    spriteID: fd24e84ebff8fdd43be3783eed3272e9
+      x: 4
+      y: 1582
+      width: 928
+      height: 914
+    spriteID: e0be9a7d4b7b2814e875c6272b4e50bc
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -113,20 +113,20 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 1031, y: 1533}
+    uvTransform: {x: 4, y: 1582}
     spritePosition: {x: 0, y: 0}
   - name: Hollow knight assets_1
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 1389
-      y: 2515
-      width: 6
-      height: 6
-    spriteID: 131f515572f600e42b0c1e027b085cbb
+      x: 1034
+      y: 1550
+      width: 658
+      height: 1017
+    spriteID: 78eef0cb4a30a144a85356efff8ede7f
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -134,20 +134,20 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 1389, y: 2515}
+    uvTransform: {x: 1034, y: 1550}
     spritePosition: {x: 0, y: 0}
   - name: Hollow knight assets_2
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 1396
-      y: 2517
-      width: 4
-      height: 4
-    spriteID: a94ffc6adbdf864489ce8c6402cf069d
+      x: 38
+      y: 630
+      width: 838
+      height: 782
+    spriteID: 0c183b7f187282a408fad2951c76a396
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -155,41 +155,20 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 1396, y: 2517}
+    uvTransform: {x: 38, y: 630}
     spritePosition: {x: 0, y: 0}
   - name: Hollow knight assets_3
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 3
-      y: 1563
-      width: 864
-      height: 854
-    spriteID: 979d6b0c698ac384b867975fb0423a7e
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 3, y: 1563}
-    spritePosition: {x: 0, y: 0}
-  - name: Hollow knight assets_4
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 1024
-      y: 1790
-      width: 17
-      height: 30
-    spriteID: 08323433092b08c42a949cbf3e95d798
+      y: 664
+      width: 1018
+      height: 748
+    spriteID: 694650bc052a81f4d8744ca79fe2892c
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -197,7 +176,28 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 1024, y: 1790}
+    uvTransform: {x: 1024, y: 664}
+    spritePosition: {x: 0, y: 0}
+  - name: Hollow knight assets_4
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1384
+      y: 612
+      width: 122
+      height: 62
+    spriteID: 179dd687ba06bea4da893772e1466e38
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1384, y: 612}
     spritePosition: {x: 0, y: 0}
   - name: Hollow knight assets_5
     originalName: 
@@ -206,11 +206,11 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 37
-      y: 613
-      width: 774
-      height: 720
-    spriteID: 0cfdbf59be52248418509a3309284c7f
+      x: 364
+      y: 1
+      width: 996
+      height: 651
+    spriteID: 657e4d4d72dab6b45841d194336d1dd6
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -218,49 +218,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 37, y: 613}
-    spritePosition: {x: 0, y: 0}
-  - name: Hollow knight assets_6
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 1023
-      y: 646
-      width: 956
-      height: 687
-    spriteID: e1902b9aec6dfe941af3bedaf6a5087c
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 1023, y: 646}
-    spritePosition: {x: 0, y: 0}
-  - name: Hollow knight assets_7
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 1117
-      y: 3
-      width: 920
-      height: 664
-    spriteID: 626aed313e2cfd04ba4a012cce647ff7
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 1117, y: 3}
+    uvTransform: {x: 364, y: 1}
     spritePosition: {x: 0, y: 0}
   characterData:
     bones: []
@@ -529,12 +487,12 @@ ScriptedImporter:
     isImported: 1
     isVisible: 1
   - name: Background
-    spriteName: 
+    spriteName: Background
     isGroup: 0
     parentIndex: -1
     spriteID: c3f0c0bfd4006e341bc061f29b64ee58
     layerID: 1
-    mosaicPosition: {x: 0, y: 0}
+    mosaicPosition: {x: 4, y: 4}
     flatten: 0
     isImported: 0
     isVisible: 0
