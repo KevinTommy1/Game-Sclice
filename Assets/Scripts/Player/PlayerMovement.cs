@@ -1,114 +1,286 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float movementSpeed = 5f; // Speed of player movement
-    [SerializeField] private float jumpHeight = 5f; // Height of player jump
-    [SerializeField] private bool isGrounded = false; // Tracks if the player is on the ground
-    [SerializeField] private Rigidbody2D rb; // Player's Rigidbody2D component
-    [SerializeField] private bool canTakeDamage = true; // Determines if the player can take damage
+    [Header("Movement")] 
+    [SerializeField] private float moveSpeed = 7.5f;
+    [SerializeField] private float maxFallSpeed = 20f;
 
-    private enum PlayerState
+    [Header("Jump")] 
+    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float jumpTime = 0.5f;
+
+    [Header("Turn Check")] 
+    [SerializeField] private GameObject lLeg;
+    [SerializeField] private GameObject rLeg;
+
+    [Header("Ground Check")] 
+    [SerializeField] private float extraHeight = 0.25f;
+    [SerializeField] private LayerMask whatIsGround;
+
+    [Header("Camera Stuff")] 
+    [SerializeField] private GameObject cameraFollowGO;
+
+    public bool IsFacingRight { get; set; }
+
+    // PlayerDash playerDash;
+    private Rigidbody2D rb;
+    private Collider2D coll;
+    private Animator anim;
+    private float moveInput;
+
+    private bool isJumping;
+    private bool isFalling;
+    private float jumpTimeCounter;
+
+    private RaycastHit2D groundHit;
+
+    private Coroutine resetTriggerCoroutine;
+
+    //private CameraFollowObject cameraFollowObject;
+    private float fallSpeedYDampingChangeThreshold;
+
+
+    #region Unity Callback Functions
+
+    private void Awake()
     {
-        Idle,
-        MovingLeft,
-        MovingRight,
-        Jumping,
+        StartDirectionCheck();
     }
 
-    // Current state of the player
-    [SerializeField] private PlayerState currentState = PlayerState.Idle;
-
-    [SerializeField] private bool isDashing = false;
-    private int lastDirection = 0;
 
     private void Start()
     {
-        if (!TryGetComponent(out rb))
-        {
-            Debug.LogError("No RigidBody2D on " + gameObject.name);
-        }
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        coll = GetComponent<Collider2D>();
+        //playerDash = GetComponent<PlayerDash>();
+        //cameraFollowObject = cameraFollowGO.GetComponent<CameraFollowObject>();
+
+        // fallSpeedYDampingChangeThreshold = 
+        //     CameraManager.instance.fallSpeedYDampingChangeThreshold;
     }
 
     private void Update()
     {
-        HandleInput();
+        Move();
+        Jump();
+
+        // //if we are falling past a certain speed threshold
+        // if (rb.velocity.y < fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling)
+        // {
+        //     CameraManager.instance.LerpYDamping(true);
+        // }
+        //
+        // //if we are standing still or moving up
+        // if (rb.velocity.y >= 0f && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling)
+        // {
+        //     //reset so it can be called again
+        //     CameraManager.instance.LerpedFromPlayerFalling = false;
+        //     CameraManager.instance.LerpYDamping(false);
+        // }
     }
 
-
-    private void HandleInput()
+    private void FixedUpdate()
     {
-        var moveLeft = Input.GetAxisRaw("Horizontal") <= -1;
-        var moveRight = Input.GetAxisRaw("Horizontal") >= 1;
-        var jumpInput = Input.GetAxisRaw("Jump") >= 1;
-        
-        HandleMovement(moveLeft, moveRight, jumpInput);
-    }
+        //clamp the player's fall speed in the Y (I set a super high upper limit to ensure we can have a fast jump speed if we want)
+        rb.velocity = new Vector3(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxFallSpeed, maxFallSpeed * 5));
 
-    private void HandleMovement(bool moveLeft, bool moveRight, bool jumpInput)
-    {
-        if (moveLeft)
+        if (moveInput > 0 || moveInput < 0)
         {
-            currentState = PlayerState.MovingLeft;
-            lastDirection = -1;
+            TurnCheck();
         }
-        else if(moveRight)
+    }
+
+    #endregion
+
+    #region Movement Functions
+
+    private void Move()
+    {
+        moveInput = UserInput.instance.moveInput.x;
+
+        if (moveInput > 0 || moveInput < 0)
         {
-            currentState = PlayerState.MovingRight;
-            lastDirection = 1;
+            //anim.SetBool("isWalking", true);
         }
         else
         {
-            currentState = PlayerState.Idle;
+            //.SetBool("isWalking", false);
         }
-        if (jumpInput && isGrounded)
-        {
-            currentState = PlayerState.Jumping;
-        }
-        HandleState();
+
+        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
     }
 
-    private void HandleState()
+    private void Jump()
     {
-        switch (currentState)
+        //button was pushed this frame
+        if (UserInput.instance.controls.Jumping.Jump.WasPressedThisFrame() && IsGrounded())
         {
-            case PlayerState.MovingLeft:
-                rb.velocity = new Vector2(-movementSpeed, rb.velocity.y);
-                break;
+            isJumping = true;
+            jumpTimeCounter = jumpTime;
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 
-            case PlayerState.MovingRight:
-                rb.velocity = new Vector2(movementSpeed, rb.velocity.y);
-                break;
-
-            case PlayerState.Jumping:
-                rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
-                isGrounded = false;
-                currentState = PlayerState.Idle; // Reset state after jump impulse
-                break;
-            case PlayerState.Idle:
-                rb.velocity = new Vector2(0, rb.velocity.y);
-                break;
+            //anim.SetTrigger("jump");
         }
-    }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
+        //button is being held
+        if (UserInput.instance.controls.Jumping.Jump.IsPressed())
         {
-            isGrounded = true;
-            if (!isDashing)
+            if (jumpTimeCounter > 0 && isJumping)
             {
-                currentState = PlayerState.Idle;
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                jumpTimeCounter -= Time.deltaTime;
+            }
+            else if (jumpTimeCounter == 0)
+            {
+                isFalling = true;
+                isJumping = false;
+            }
+            else
+            {
+                isJumping = false;
             }
         }
+
+        //button was released this frame
+        if (UserInput.instance.controls.Jumping.Jump.WasReleasedThisFrame())
+        {
+            isJumping = false;
+            isFalling = true;
+        }
+
+        if (!isJumping && CheckForLand())
+        {
+            //anim.SetTrigger("land");
+            resetTriggerCoroutine = StartCoroutine(Reset());
+        }
+
+        DrawGroundCheck();
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    #endregion
+
+    #region Ground/Landed Check
+
+    private bool IsGrounded()
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        groundHit = Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, extraHeight,
+            whatIsGround);
+        if (groundHit.collider != null)
         {
-            isGrounded = false;
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
+
+    private bool CheckForLand()
+    {
+        if (isFalling)
+        {
+            if (IsGrounded())
+            {
+                //player has landed
+                isFalling = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private IEnumerator Reset()
+    {
+        yield return null;
+        //.ResetTrigger("land");
+    }
+
+    #endregion
+
+    #region Turn Checks
+
+    private void StartDirectionCheck()
+    {
+        if (rLeg.transform.position.x > lLeg.transform.position.x)
+        {
+            IsFacingRight = true;
+        }
+        else
+        {
+            IsFacingRight = false;
+        }
+    }
+
+    private void TurnCheck()
+    {
+        if (UserInput.instance.moveInput.x > 0 && !IsFacingRight)
+        {
+            Turn();
+        }
+
+        else if (UserInput.instance.moveInput.x < 0 && IsFacingRight)
+        {
+            Turn();
+        }
+    }
+
+    private void Turn()
+    {
+        if (IsFacingRight)
+        {
+            Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
+            transform.rotation = Quaternion.Euler(rotator);
+            IsFacingRight = !IsFacingRight;
+
+            //turn the camera follow object
+            //cameraFollowObject.CallTurn();
+            //CameraManager.instance.CallCameraFaceDirection();
+        }
+        else
+        {
+            Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
+            transform.rotation = Quaternion.Euler(rotator);
+            IsFacingRight = !IsFacingRight;
+
+            //turn the camera follow object
+            //cameraFollowObject.CallTurn();
+            //CameraManager.instance.CallCameraFaceDirection();
+        }
+    }
+
+    #endregion
+
+    #region Debug Functions
+
+    private void DrawGroundCheck()
+    {
+        Color rayColor;
+        if (IsGrounded())
+        {
+            rayColor = Color.green;
+        }
+        else
+        {
+            rayColor = Color.red;
+        }
+        Debug.DrawRay(coll.bounds.center + new Vector3(coll.bounds.extents.x, 0),
+            Vector2.down * (coll.bounds.extents.y + extraHeight), rayColor);
+        Debug.DrawRay(coll.bounds.center - new Vector3(coll.bounds.extents.x, 0),
+            Vector2.down * (coll.bounds.extents.y + extraHeight), rayColor);
+        Debug.DrawRay(coll.bounds.center - new Vector3(coll.bounds.extents.x, coll.bounds.extents.y + extraHeight),
+            Vector2.right * (coll.bounds.extents.x * 2), rayColor);
+    }
+
+    #endregion
 }
