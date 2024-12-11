@@ -1,236 +1,286 @@
 using System.Collections;
-using Unity.Mathematics;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Movement")] 
+    [SerializeField] private float moveSpeed = 7.5f;
+    [SerializeField] private float maxFallSpeed = 20f;
+
+    [Header("Jump")] 
+    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float jumpTime = 0.5f;
+
+    [Header("Turn Check")] 
+    [SerializeField] private GameObject lLeg;
+    [SerializeField] private GameObject rLeg;
+
+    [Header("Ground Check")] 
+    [SerializeField] private float extraHeight = 0.25f;
+    [SerializeField] private LayerMask whatIsGround;
+
+    [Header("Camera Stuff")] 
+    [SerializeField] private GameObject cameraFollowGO;
+
+    public bool IsFacingRight { get; set; }
+
+    // PlayerDash playerDash;
     private Rigidbody2D rb;
-    
-    [Header("Animation")] 
-    [SerializeField] private Animator anim;
-    private static readonly int Idle = Animator.StringToHash("Idle");
-    //private static readonly int Dash = Animator.StringToHash("Dash");
-    private static readonly int Jump = Animator.StringToHash("Jump");
-    //private static readonly int Fall = Animator.StringToHash("Fall");
-    private static readonly int WalkLeft = Animator.StringToHash("WalkLeft");
-    
-    private static readonly int WalkRight = Animator.StringToHash("WalkRight");
-    
-    [Header("Jumping & speed")]
-    private float jumpStartPos = 9999f;
-    private float elevationGained = 0f;
-    private float yPosLastFrame = 0f;
-    private bool isJumping = false;
-    private bool jumpKeyDown = false;
-    private bool jumpKeyUp = false;
-    
-    private bool grounded = false;
-    private bool falling = false;
+    private Collider2D coll;
+    private Animator anim;
+    private float moveInput;
 
-    [SerializeField] private float jumpHeight;
-    [SerializeField] private float size = 1;
-    [SerializeField] private float maxSpeed = 10f;
-    [SerializeField] private float jumpForce = 10f;
+    private bool isJumping;
+    private bool isFalling;
+    private float jumpTimeCounter;
 
-    [Header("Dashing")] 
-    [SerializeField] private float dashingVelocity = 14f;
-    [SerializeField] private float dashDistance = 2f;
-    [SerializeField] private float dashingTime = 0.5f;
+    private RaycastHit2D groundHit;
 
-    private Vector2 lastMovementDirection = new(1, 0);
-    private Vector2 dashingDirection;
-    private bool isDashing;
-    private bool canDash = true;
-    private bool isMoving = false;
+    private Coroutine resetTriggerCoroutine;
 
-    public bool isFacingRight;
+    //private CameraFollowObject cameraFollowObject;
+    private float fallSpeedYDampingChangeThreshold;
+
+
+    #region Unity Callback Functions
+
+    private void Awake()
+    {
+        StartDirectionCheck();
+    }
 
 
     private void Start()
     {
-        if (!TryGetComponent(out rb))
-        {
-            Debug.LogError("No RigidBody2D on " + gameObject.name);
-        }
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        coll = GetComponent<Collider2D>();
+        //playerDash = GetComponent<PlayerDash>();
+        //cameraFollowObject = cameraFollowGO.GetComponent<CameraFollowObject>();
 
-        if (!TryGetComponent(out anim))
-        {
-            Debug.LogError("No Animator on " + gameObject.name);
-        }
+        // fallSpeedYDampingChangeThreshold = 
+        //     CameraManager.instance.fallSpeedYDampingChangeThreshold;
     }
 
     private void Update()
     {
-        grounded = IsGrounded();
-        falling = IsFalling();
-        
-      //  print(grounded);
-        Movement();
-        if (!jumpKeyDown && Input.GetKeyDown(KeyCode.Space))
-        {
-            jumpKeyDown = true;
-        }
+        Move();
+        Jump();
 
-        if (!jumpKeyUp && Input.GetKeyUp(KeyCode.Space))
-        {
-            jumpKeyUp = true;
-        }
-
-        var dashInput = Input.GetButtonDown("Dash");
-        
-        //need to calculate velocity manually because "newVelocity.y = isJumping ? jumpForce : -jumpForce;"
-
-        if (!dashInput || !canDash) return;
-        isDashing = true;
-        canDash = false;
-        dashingDirection = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
-        //anim.SetTrigger(Dash);
-        if (dashingDirection == Vector2.zero)
-        {
-            dashingDirection = lastMovementDirection;
-        }
-
-        StartCoroutine(StopDashing());
+        // //if we are falling past a certain speed threshold
+        // if (rb.velocity.y < fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling)
+        // {
+        //     CameraManager.instance.LerpYDamping(true);
+        // }
+        //
+        // //if we are standing still or moving up
+        // if (rb.velocity.y >= 0f && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling)
+        // {
+        //     //reset so it can be called again
+        //     CameraManager.instance.LerpedFromPlayerFalling = false;
+        //     CameraManager.instance.LerpYDamping(false);
+        // }
     }
 
     private void FixedUpdate()
     {
-        if (rb == null) return;
-        yPosLastFrame = transform.position.y;
+        //clamp the player's fall speed in the Y (I set a super high upper limit to ensure we can have a fast jump speed if we want)
+        rb.velocity = new Vector3(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxFallSpeed, maxFallSpeed * 5));
+
+        if (moveInput > 0 || moveInput < 0)
+        {
+            TurnCheck();
+        }
     }
 
-    private void Movement()
+    #endregion
+
+    #region Movement Functions
+
+    private void Move()
     {
-        if (jumpKeyDown && grounded)
+        moveInput = UserInput.instance.moveInput.x;
+
+        if (moveInput > 0 || moveInput < 0)
         {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            jumpStartPos = transform.position.y;
+            //anim.SetBool("isWalking", true);
+        }
+        else
+        {
+            //.SetBool("isWalking", false);
+        }
+
+        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+    }
+
+    private void Jump()
+    {
+        //button was pushed this frame
+        if (UserInput.instance.controls.Jumping.Jump.WasPressedThisFrame() && IsGrounded())
+        {
             isJumping = true;
-            ////anim.SetTrigger(Jump);
-            
-            jumpKeyDown = false;
+            jumpTimeCounter = jumpTime;
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+
+            //anim.SetTrigger("jump");
         }
 
-        elevationGained = transform.position.y - jumpStartPos;
-        if (elevationGained > jumpHeight || jumpKeyUp)
+        //button is being held
+        if (UserInput.instance.controls.Jumping.Jump.IsPressed())
         {
-            isJumping = false;
-            jumpKeyUp = false;
-            ////anim.SetTrigger(Fall);
-        }
-
-        if (isDashing)
-        {
-            rb.velocity = dashingDirection.normalized * dashingVelocity;
-            isJumping = false;
-        }
-        else
-        {
-            float moveX = Input.GetAxis("Horizontal") * maxSpeed;
-            if (math.abs(moveX) < 0.8f) moveX = 0;
-            Vector2 newVelocity;
-            newVelocity.x = moveX;
-            newVelocity.y = isJumping ? jumpForce : -jumpForce;
-            rb.velocity = newVelocity;
-            HandleAnimation(moveX);
-            //if (moveX > 0)
-            //{
-            //    isFacingRight = true;
-            //    anim.SetTrigger(WalkRight);
-            //} else if (moveX < 0)
-            //{
-            //    isFacingRight = false;
-            //    anim.SetTrigger(WalkLeft);
-            //}
-            //else
-            //{
-            //    anim.SetTrigger(Idle);
-            //}
-            // 
-
-            if (moveX != 0)
+            if (jumpTimeCounter > 0 && isJumping)
             {
-                lastMovementDirection = new Vector2(moveX, 0);
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                jumpTimeCounter -= Time.deltaTime;
             }
-        }
-
-        if (grounded)
-        {
-            canDash = true;
-        }
-    }
-
-
-    private void HandleAnimation(float inputX)
-    {
-        if (isDashing)
-        {
-            //anim.SetTrigger(Dash);
-            return;
-        }
-
-        if (grounded)
-        {
-            //print(inputX);
-            if (inputX < 0)
+            else if (jumpTimeCounter == 0)
             {
-                isFacingRight = false;
-                print("walking left");
-                anim.SetTrigger(WalkLeft);
-            }
-            else if (inputX > 0)
-            {
-                isFacingRight = true;
-                print("walking right");
-
-                anim.SetTrigger(WalkRight);
+                isFalling = true;
+                isJumping = false;
             }
             else
             {
-                anim.SetTrigger(Idle);
+                isJumping = false;
             }
         }
-        else
+
+        //button was released this frame
+        if (UserInput.instance.controls.Jumping.Jump.WasReleasedThisFrame())
         {
-            if (isJumping)
-            {
-                //anim.SetTrigger(Jump);
-            }
-            else
-            {
-                //anim.SetTrigger(Fall);
-            }
+            isJumping = false;
+            isFalling = true;
         }
+
+        if (!isJumping && CheckForLand())
+        {
+            //anim.SetTrigger("land");
+            resetTriggerCoroutine = StartCoroutine(Reset());
+        }
+
+        DrawGroundCheck();
     }
 
-    private IEnumerator StopDashing()
-    {
-        yield return new WaitForSeconds(dashingTime);
-        isDashing = false;
-    }
+    #endregion
+
+    #region Ground/Landed Check
 
     private bool IsGrounded()
     {
-        Debug.DrawRay(transform.position + Vector3.down * size, Vector2.down * 0.1f, Color.red);
-        bool grounded= Physics2D.Raycast(transform.position + Vector3.down * size, Vector2.down, 0.1f).collider != null && 
-                       // this means velocity on y is 0
-                       yPosLastFrame == transform.position.y;
-
-        if(grounded)
+        groundHit = Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, extraHeight,
+            whatIsGround);
+        if (groundHit.collider != null)
         {
-            Debug.Log($"{transform.position.y - yPosLastFrame}"); // {yPosLastFrame} {transform.position.y}");
+            return true;
         }
-        return grounded;
+        else
+        {
+            return false;
+        }
     }
 
-    private bool IsFalling()
+    private bool CheckForLand()
     {
-        return true;
+        if (isFalling)
+        {
+            if (IsGrounded())
+            {
+                //player has landed
+                isFalling = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
-    //private bool IsGrounded(Color kleur)
-    //{
-    //    Debug.DrawRay(transform.position + Vector3.down * size, Vector2.down * 2f, kleur);
-    //    return Physics2D.Raycast(transform.position + Vector3.down * size, Vector2.down, 0.1f).collider != null &&
-    //           rb.velocity.y == 0;
-    //}
+
+    private IEnumerator Reset()
+    {
+        yield return null;
+        //.ResetTrigger("land");
+    }
+
+    #endregion
+
+    #region Turn Checks
+
+    private void StartDirectionCheck()
+    {
+        if (rLeg.transform.position.x > lLeg.transform.position.x)
+        {
+            IsFacingRight = true;
+        }
+        else
+        {
+            IsFacingRight = false;
+        }
+    }
+
+    private void TurnCheck()
+    {
+        if (UserInput.instance.moveInput.x > 0 && !IsFacingRight)
+        {
+            Turn();
+        }
+
+        else if (UserInput.instance.moveInput.x < 0 && IsFacingRight)
+        {
+            Turn();
+        }
+    }
+
+    private void Turn()
+    {
+        if (IsFacingRight)
+        {
+            Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
+            transform.rotation = Quaternion.Euler(rotator);
+            IsFacingRight = !IsFacingRight;
+
+            //turn the camera follow object
+            //cameraFollowObject.CallTurn();
+            //CameraManager.instance.CallCameraFaceDirection();
+        }
+        else
+        {
+            Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
+            transform.rotation = Quaternion.Euler(rotator);
+            IsFacingRight = !IsFacingRight;
+
+            //turn the camera follow object
+            //cameraFollowObject.CallTurn();
+            //CameraManager.instance.CallCameraFaceDirection();
+        }
+    }
+
+    #endregion
+
+    #region Debug Functions
+
+    private void DrawGroundCheck()
+    {
+        Color rayColor;
+        if (IsGrounded())
+        {
+            rayColor = Color.green;
+        }
+        else
+        {
+            rayColor = Color.red;
+        }
+        Debug.DrawRay(coll.bounds.center + new Vector3(coll.bounds.extents.x, 0),
+            Vector2.down * (coll.bounds.extents.y + extraHeight), rayColor);
+        Debug.DrawRay(coll.bounds.center - new Vector3(coll.bounds.extents.x, 0),
+            Vector2.down * (coll.bounds.extents.y + extraHeight), rayColor);
+        Debug.DrawRay(coll.bounds.center - new Vector3(coll.bounds.extents.x, coll.bounds.extents.y + extraHeight),
+            Vector2.right * (coll.bounds.extents.x * 2), rayColor);
+    }
+
+    #endregion
 }

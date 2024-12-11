@@ -10,8 +10,8 @@
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 
-# Jetbrains Rider
-/.[Ii]dea
+# JetBrains Rider
+/.[Ii]dea/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
