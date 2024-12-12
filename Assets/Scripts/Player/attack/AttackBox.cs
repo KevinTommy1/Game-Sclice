@@ -1,15 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackBox : MonoBehaviour
 {
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "hittable")
         {
-            Destroy(other.gameObject); //place holder.
+            Debug.Log("swoosh " + other.gameObject.name + " has bin hit");
         }
     }
-
 }

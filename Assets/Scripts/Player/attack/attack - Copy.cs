@@ -6,24 +6,39 @@ using UnityEngine;
 
 public class attack : MonoBehaviour
 {
+    bool canattack = true;
+    GameObject NewAttackBox;
     public GameObject attackBox;
     void Update()
     {
-       if (Input.GetKeyUp(KeyCode.X))
+        if (Input.GetKeyUp(KeyCode.X) && canattack == true)
         {
-          Debug.Log("yappers");
-          GameObject hitbox = Instantiate(attackBox);
-          Thread.Sleep(1000000000);
-          Destroy(hitbox);
-          Thread.Sleep(200);
-          Debug.Log("yippers");
+            canattack = false;
+            NewAttackBox = Instantiate(attackBox,gameObject.transform);
+            Attack(1.2f);            
+            AttackDelay(0.1f);
         }
     }
-     IEnumerator waitForSeconds(float seconds)
+
+    private void AttackDelay(float delay)
     {
-        yield return new WaitForSeconds(seconds);   
-    } 
+        StartCoroutine(Delay(delay));     
+    }
+    IEnumerator Delay(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        canattack = true;
+    }
 
+    private void Attack(float delay)
+    {
+        StartCoroutine(Slash(delay));
+    }
 
+    IEnumerator Slash(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
 
+        Destroy(NewAttackBox);
+    }
 }
