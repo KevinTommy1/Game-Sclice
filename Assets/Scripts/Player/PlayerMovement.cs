@@ -154,7 +154,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!isJumping && CheckForLand())
         {
-            //anim.SetTrigger("land");
+            anim.SetTrigger("land");
             resetTriggerCoroutine = StartCoroutine(Reset());
         }
 
@@ -203,7 +203,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator Reset()
     {
         yield return null;
-        //anim.ResetTrigger("land");
+        anim.ResetTrigger("land");
     }
 
     #endregion
