@@ -7,8 +7,9 @@ public class FallingSpike : MonoBehaviour
     [SerializeField] private LayerMask layerMaskGround;
     [SerializeField] private bool playerTrigger = false;
     [SerializeField] private bool isFalling;
-    
+
     private float speed;
+    private bool hasStartedFalling = false;
 
     private void Update()
     {
@@ -21,9 +22,15 @@ public class FallingSpike : MonoBehaviour
             }
         }
 
-        if (playerTrigger)
+        if (playerTrigger && !hasStartedFalling)
         {
-            if (Physics2D.Raycast(transform.position, Vector2.down, 10f, layerMaskPlayer))
+            hasStartedFalling = true;
+        }
+
+        if (hasStartedFalling)
+        {
+            if (Physics2D.Raycast(transform.position, Vector2.down, 10f, layerMaskPlayer) || 
+                Physics2D.Raycast(transform.position, Vector2.down, 10f, layerMaskGround))
             {
                 isFalling = true;
                 transform.position += new Vector3(0, -20, 0) * (speed * Time.deltaTime);
