@@ -9,7 +9,7 @@ public class AttackBox : MonoBehaviour
     {
         if (other.gameObject.tag == "hittable")
         {
-            Debug.Log("swoosh " + other.gameObject.name + " has bin hit");
+            other.gameObject.GetComponent<Hittable>();
         }
     }
 }

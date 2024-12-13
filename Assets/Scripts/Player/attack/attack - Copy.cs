@@ -4,41 +4,43 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using UnityEngine;
 
-public class attack : MonoBehaviour
+public class Attack : MonoBehaviour
 {
-    bool canattack = true;
-    GameObject NewAttackBox;
-    public GameObject attackBox;
-    void Update()
+    [SerializeField] private GameObject attackBox;
+    private bool canAttack = true;
+    private GameObject newAttackBox;
+    
+    void Update()   
     {
-        if (Input.GetKeyUp(KeyCode.X) && canattack == true)
+        if (Input.GetKeyUp(KeyCode.X) && canAttack == true)
         {
-            canattack = false;
-            NewAttackBox = Instantiate(attackBox,gameObject.transform);
-            Attack(1.2f);            
+            canAttack = false;
+            newAttackBox = Instantiate(attackBox,gameObject.transform);
+            Swoosh(0.2f);            
             AttackDelay(0.1f);
         }
     }
 
-    private void AttackDelay(float delay)
-    {
-        StartCoroutine(Delay(delay));     
-    }
-    IEnumerator Delay(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        canattack = true;
-    }
-
-    private void Attack(float delay)
+    //delay before the hitbox is removed, abstraction to make code more readable
+    private void Swoosh(float delay)
     {
         StartCoroutine(Slash(delay));
     }
-
     IEnumerator Slash(float seconds)
     {
         yield return new WaitForSeconds(seconds);
+        Destroy(newAttackBox);
+    }
 
-        Destroy(NewAttackBox);
+
+    //delay before you can attack again, abstraction to make code more readable
+    private void AttackDelay(float delay)
+    {
+        StartCoroutine(Delay(delay));     
+    } 
+    IEnumerator Delay(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        canAttack = true;
     }
 }
