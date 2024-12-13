@@ -11,11 +11,6 @@ public class FallingSpike : MonoBehaviour
     [SerializeField] private bool isFalling;
     private float speed;
 
-    private void Start()
-    {
-        boxCollider2D = GetComponent<BoxCollider2D>();
-    }
-
     private void Update()
     {
         Vector2 pos = new Vector2(transform.position.x, transform.position.y - transform.localScale.y / 2 - .1f);
