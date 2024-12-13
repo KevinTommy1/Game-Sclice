@@ -5,10 +5,16 @@ public class FallingSpike : MonoBehaviour
 {
     [SerializeField] private LayerMask layerMaskPlayer;
     [SerializeField] private LayerMask layerMaskGround;
+    private BoxCollider2D boxCollider2D;
 
     [SerializeField] private bool playerTrigger = false;
     [SerializeField] private bool isFalling;
     private float speed;
+
+    private void Start()
+    {
+        boxCollider2D = GetComponent<BoxCollider2D>();
+    }
 
     private void Update()
     {
@@ -26,15 +32,24 @@ public class FallingSpike : MonoBehaviour
             if (Physics2D.Raycast(transform.position, Vector2.down, 10f, layerMaskPlayer))
             {
                 isFalling = true;
-                transform.position += new Vector3(0, -20, 0) * speed * Time.deltaTime;
+                transform.position += new Vector3(0, -20, 0) * (speed * Time.deltaTime);
                 speed += 0.004f;
             }
-            else
+            else 
             {
                 isFalling = false;
             }
         }
-
         Debug.DrawRay(transform.position, Vector2.down * 10f, Color.red);
+        HitPlayer();
     }
+
+    private void HitPlayer()
+    {
+        if (!isFalling) return;
+        if (!Physics2D.Raycast(transform.position, Vector2.down, 1f, layerMaskPlayer)) return;
+        var player = GameObject.FindWithTag("Player");
+        player.GetComponent<Health>().TakeDamage(1);
+    }
+    
 }

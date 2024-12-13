@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    private int health;
-
+    [SerializeField] private int health = 5;
     
     private void AddHealth(int amount)
     {
