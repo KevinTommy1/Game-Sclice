@@ -5,10 +5,9 @@ public class FallingSpike : MonoBehaviour
 {
     [SerializeField] private LayerMask layerMaskPlayer;
     [SerializeField] private LayerMask layerMaskGround;
-    private BoxCollider2D boxCollider2D;
-
     [SerializeField] private bool playerTrigger = false;
     [SerializeField] private bool isFalling;
+    
     private float speed;
 
     private void Update()
