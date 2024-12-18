@@ -1,3 +1,5 @@
+// todo: why does trackedOffset rotate with player? can cameraFollowGO be Removed? alternatively research if cameraFollowObject can be copied over
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,7 +41,6 @@ public class PlayerMovement : MonoBehaviour
 
     private Coroutine resetTriggerCoroutine;
 
-    //private CameraFollowObject cameraFollowObject;
     private float fallSpeedYDampingChangeThreshold;
 
 
@@ -86,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         //clamp the player's fall speed in the Y (I set a super high upper limit to ensure we can have a fast jump speed if we want)
-        rb.velocity = new Vector3(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxFallSpeed, maxFallSpeed * 5));
+        rb.velocity = new Vector3(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxFallSpeed, maxFallSpeed * 10));
 
         if (moveInput > 0 || moveInput < 0)
         {
@@ -136,8 +137,8 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (jumpTimeCounter == 0)
             {
-                isFalling = true;
                 isJumping = false;
+                isFalling = true;
             }
             else
             {

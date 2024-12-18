@@ -28,7 +28,7 @@ public class CameraFollowObject : MonoBehaviour
         {
             Debug.LogError($"No PlayerMovement on {player.name}, or given gameobject isn't the player");
         }
-        else{lastFacingDirection = playerMovement.isFacingRight;}
+        else{lastFacingDirection = playerMovement.IsFacingRight;}
     }
 
     // Update is called once per frame
@@ -38,9 +38,9 @@ public class CameraFollowObject : MonoBehaviour
         transposer.m_TrackedObjectOffset = offset;
         
         // check if facing direction has changed, if so, update cameraOffset
-        if (lastFacingDirection!= playerMovement.isFacingRight)
+        if (lastFacingDirection!= playerMovement.IsFacingRight)
         {
-            lastFacingDirection = playerMovement.isFacingRight;
+            lastFacingDirection = playerMovement.IsFacingRight;
             ChangeCameraOffset();
         }
     }
