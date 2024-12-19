@@ -60,8 +60,9 @@ public class PlayerMovement : MonoBehaviour
         //playerDash = GetComponent<PlayerDash>();
         //cameraFollowObject = cameraFollowGO.GetComponent<CameraFollowObject>();
 
-        // fallSpeedYDampingChangeThreshold = 
-        //     CameraManager.instance.fallSpeedYDampingChangeThreshold;
+        print(CameraManager.instance);
+         fallSpeedYDampingChangeThreshold = 
+             CameraManager.instance._fallSpeedYDampingChangeThreshold;
     }
 
     private void Update()
@@ -69,19 +70,19 @@ public class PlayerMovement : MonoBehaviour
         Move();
         Jump();
 
-        // //if we are falling past a certain speed threshold
-        // if (rb.velocity.y < fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling)
-        // {
-        //     CameraManager.instance.LerpYDamping(true);
-        // }
-        //
-        // //if we are standing still or moving up
-        // if (rb.velocity.y >= 0f && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling)
-        // {
-        //     //reset so it can be called again
-        //     CameraManager.instance.LerpedFromPlayerFalling = false;
-        //     CameraManager.instance.LerpYDamping(false);
-        // }
+         //if we are falling past a certain speed threshold
+         if (rb.velocity.y < fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling)
+         {
+             CameraManager.instance.LerpYDamping(true);
+         }
+        
+         //if we are standing still or moving up
+         if (rb.velocity.y >= 0f && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling)
+         {
+             //reset so it can be called again
+             CameraManager.instance.LerpedFromPlayerFalling = false;
+             CameraManager.instance.LerpYDamping(false);
+         }
     }
 
     private void FixedUpdate()
@@ -246,7 +247,7 @@ public class PlayerMovement : MonoBehaviour
 
             //turn the camera follow object
             //cameraFollowObject.CallTurn();
-            //CameraManager.instance.CallCameraFaceDirection();
+            CameraManager.instance.CallCameraFaceDirection();
         }
         else
         {
@@ -256,7 +257,7 @@ public class PlayerMovement : MonoBehaviour
 
             //turn the camera follow object
             //cameraFollowObject.CallTurn();
-            //CameraManager.instance.CallCameraFaceDirection();
+            CameraManager.instance.CallCameraFaceDirection();
         }
     }
 
