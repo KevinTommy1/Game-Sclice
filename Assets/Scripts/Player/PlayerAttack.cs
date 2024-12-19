@@ -30,6 +30,6 @@ public class PlayerAttack : MonoBehaviour
         hit = Physics2D.Raycast(transform.position, transform.right, 1f, LayerMask.GetMask("Enemy", "Geo"));
         if (!hit) return;
         Debug.Log(hit.transform.name);
-        hit.transform.GetComponent<Health>().TakeDamage(damage);
+        //hit.transform.GetComponent<Health>().TakeDamage(damage);
     }
 }

@@ -10,11 +10,11 @@ public class FallingSpike : MonoBehaviour
 
     private float speed;
     private bool hasStartedFalling = false;
-    private PlayerHit playerHit;
+    private GameObject player;
 
     private void Start()
     {
-        playerHit = GameObject.Find("Player").GetComponent<PlayerHit>();
+        player = GameObject.FindWithTag("Player");
     }
 
     private void Update()
@@ -50,8 +50,13 @@ public class FallingSpike : MonoBehaviour
             }
         }
 
+        if (isFalling && Physics2D.Raycast(transform.position, Vector2.down, 1f, layerMaskPlayer))
+        {
+            player.GetComponent<Health>().TakeDamage(1, Vector2.up, 5f, 1f);
+        }
+        
         Debug.DrawRay(transform.position, Vector2.down * 10f, Color.red);
-        playerHit.TakeDamage(-transform.forward, 5f, 1f);
+        
     }
 
 }
