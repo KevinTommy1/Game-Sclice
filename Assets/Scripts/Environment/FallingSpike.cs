@@ -47,6 +47,7 @@ public class FallingSpike : MonoBehaviour
             else
             {
                 isFalling = false;
+                //can be destroyed
             }
         }
 
