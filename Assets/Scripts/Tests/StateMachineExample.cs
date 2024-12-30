@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -25,8 +23,15 @@ public class StateMachineExample : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        SetState();
         HandleState();
     }
+
+    private void SetState()
+    {
+        throw new NotImplementedException();
+    }
+
     private void HandleState()
     {
         if (currentState != previousState)
