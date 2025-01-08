@@ -658,6 +658,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7308817392057829323, guid: 60bb5daa3433ccc499c527ef14aaacd1, type: 3}
+      propertyPath: cameraFollowGO
+      value: 
+      objectReference: {fileID: 1595880933}
     - target: {fileID: 9020279265947866888, guid: 60bb5daa3433ccc499c527ef14aaacd1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.56

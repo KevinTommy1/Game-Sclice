@@ -111,7 +111,7 @@ Transform:
   m_GameObject: {fileID: 1939444863555441998}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.993, z: 0.03453459}
+  m_LocalPosition: {x: 0, y: -0.803, z: 0.03453459}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -688,7 +688,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 1000
+    maxNumParticles: 100
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -5225,7 +5225,7 @@ Transform:
   m_GameObject: {fileID: 4412831588029657156}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.004, y: -0.996, z: 0.03453459}
+  m_LocalPosition: {x: 0.004, y: -0.808, z: 0.03453459}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

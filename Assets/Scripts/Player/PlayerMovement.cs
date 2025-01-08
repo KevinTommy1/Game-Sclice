@@ -194,8 +194,8 @@ public class PlayerMovement : MonoBehaviour
             if (IsGrounded())
             {
                 //player has landed
-                isFalling = false;
                 landParticles.Play();
+                isFalling = false;
                 return true;
             }
             else
