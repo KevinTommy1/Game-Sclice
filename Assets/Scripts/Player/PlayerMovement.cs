@@ -24,6 +24,10 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Camera Stuff")] 
     [SerializeField] private GameObject cameraFollowGO;
+    
+    [Header("Particles")]
+    [SerializeField] private ParticleSystem movementParticles;
+    [SerializeField] private ParticleSystem landParticles;
 
     public bool IsFacingRight { get; set; }
 
@@ -34,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     private float moveInput;
 
     private bool isJumping;
-    private bool isFalling;
+    [SerializeField]private bool isFalling;
     private float jumpTimeCounter;
 
     private RaycastHit2D groundHit;
@@ -107,10 +111,12 @@ public class PlayerMovement : MonoBehaviour
         if (moveInput > 0 || moveInput < 0)
         {
             //anim.SetBool("isWalking", true);
+            movementParticles.Play();
         }
         else
         {
             //.SetBool("isWalking", false);
+            movementParticles.Stop();
         }
 
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
@@ -188,6 +194,7 @@ public class PlayerMovement : MonoBehaviour
             if (IsGrounded())
             {
                 //player has landed
+                landParticles.Play();
                 isFalling = false;
                 return true;
             }
