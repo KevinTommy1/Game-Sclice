@@ -89,7 +89,7 @@ Transform:
   m_GameObject: {fileID: 3211297867929133875}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.4, y: -1, z: 0}
+  m_LocalPosition: {x: -0.486, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -271,6 +271,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   cameraFollowGO: {fileID: 0}
+  movementParticles: {fileID: 4883807385227519291}
+  landParticles: {fileID: 1026582924972136585}
 --- !u!114 &4750520341330356088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,7 +299,7 @@ GameObject:
   - component: {fileID: 1026582924972136585}
   - component: {fileID: 8833210227302852506}
   m_Layer: 0
-  m_Name: Fall Particle
+  m_Name: Land Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -312,7 +314,7 @@ Transform:
   m_GameObject: {fileID: 4778913404410227367}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.5, y: -0.94000006, z: 0.03453459}
+  m_LocalPosition: {x: 0.004, y: -0.996, z: 0.03453459}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -342,7 +344,7 @@ ParticleSystem:
     serializedVersion: 2
     minMaxState: 3
     scalar: 0.8
-    minScalar: 0.3
+    minScalar: 0
     maxCurve:
       serializedVersion: 2
       m_Curve:
@@ -5200,7 +5202,7 @@ Transform:
   m_GameObject: {fileID: 4813271349910326670}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.24, y: -0.94000006, z: 0.03453459}
+  m_LocalPosition: {x: 0, y: -0.993, z: 0.03453459}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6779,7 +6781,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
