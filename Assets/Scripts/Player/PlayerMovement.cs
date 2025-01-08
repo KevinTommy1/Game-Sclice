@@ -1,3 +1,5 @@
+// todo: why does trackedOffset rotate with player? can cameraFollowGO be Removed? alternatively research if cameraFollowObject can be copied over
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,7 +45,6 @@ public class PlayerMovement : MonoBehaviour
 
     private Coroutine resetTriggerCoroutine;
 
-    //private CameraFollowObject cameraFollowObject;
     private float fallSpeedYDampingChangeThreshold;
 
 
@@ -63,8 +64,9 @@ public class PlayerMovement : MonoBehaviour
         //playerDash = GetComponent<PlayerDash>();
         //cameraFollowObject = cameraFollowGO.GetComponent<CameraFollowObject>();
 
-        // fallSpeedYDampingChangeThreshold = 
-        //     CameraManager.instance.fallSpeedYDampingChangeThreshold;
+        print(CameraManager.instance);
+         fallSpeedYDampingChangeThreshold = 
+             CameraManager.instance._fallSpeedYDampingChangeThreshold;
     }
 
     private void Update()
@@ -72,25 +74,25 @@ public class PlayerMovement : MonoBehaviour
         Move();
         Jump();
 
-        // //if we are falling past a certain speed threshold
-        // if (rb.velocity.y < fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling)
-        // {
-        //     CameraManager.instance.LerpYDamping(true);
-        // }
-        //
-        // //if we are standing still or moving up
-        // if (rb.velocity.y >= 0f && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling)
-        // {
-        //     //reset so it can be called again
-        //     CameraManager.instance.LerpedFromPlayerFalling = false;
-        //     CameraManager.instance.LerpYDamping(false);
-        // }
+         //if we are falling past a certain speed threshold
+         if (rb.velocity.y < fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling)
+         {
+             CameraManager.instance.LerpYDamping(true);
+         }
+        
+         //if we are standing still or moving up
+         if (rb.velocity.y >= 0f && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling)
+         {
+             //reset so it can be called again
+             CameraManager.instance.LerpedFromPlayerFalling = false;
+             CameraManager.instance.LerpYDamping(false);
+         }
     }
 
     private void FixedUpdate()
     {
         //clamp the player's fall speed in the Y (I set a super high upper limit to ensure we can have a fast jump speed if we want)
-        rb.velocity = new Vector3(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxFallSpeed, maxFallSpeed * 5));
+        rb.velocity = new Vector3(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxFallSpeed, maxFallSpeed * 10));
 
         if (moveInput > 0 || moveInput < 0)
         {
@@ -142,8 +144,8 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (jumpTimeCounter == 0)
             {
-                isFalling = true;
                 isJumping = false;
+                isFalling = true;
             }
             else
             {
@@ -252,7 +254,7 @@ public class PlayerMovement : MonoBehaviour
 
             //turn the camera follow object
             //cameraFollowObject.CallTurn();
-            //CameraManager.instance.CallCameraFaceDirection();
+            CameraManager.instance.CallCameraFaceDirection();
         }
         else
         {
@@ -262,7 +264,7 @@ public class PlayerMovement : MonoBehaviour
 
             //turn the camera follow object
             //cameraFollowObject.CallTurn();
-            //CameraManager.instance.CallCameraFaceDirection();
+            CameraManager.instance.CallCameraFaceDirection();
         }
     }
 
