@@ -74,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
          if (rb.velocity.y < fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling)
          {
              CameraManager.instance.LerpYDamping(true);
+             print("call LerpYDamping");
          }
         
          //if we are standing still or moving up

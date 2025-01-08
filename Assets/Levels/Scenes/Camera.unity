@@ -1276,7 +1276,7 @@ MonoBehaviour:
   - {fileID: 835766127}
   _fallPanAmount: 0.25
   _fallYPanTime: 0.35
-  _fallSpeedYDampingChangeThreshold: -15
+  _fallSpeedYDampingChangeThreshold: -10
   _flipScreenTime: 0.5
   _player: {fileID: 1061076306}
 --- !u!1 &1376733635
