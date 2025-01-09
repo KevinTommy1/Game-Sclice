@@ -20,10 +20,10 @@ public class FallingSpike : MonoBehaviour
     private void Update()
     {
         Vector2 pos = new Vector2(transform.position.x, transform.position.y - transform.localScale.y / 2 - .1f);
-        if (Physics2D.BoxCast(pos, new Vector2(transform.localScale.x, transform.localScale.y), 0, Vector2.down, 10) &&
+        if (Physics2D.BoxCast(pos, new Vector2(transform.localScale.x, transform.localScale.y), 0, Vector2.down, 5f) &&
             !playerTrigger)
         {
-            if (Physics2D.BoxCast(pos, new Vector2(transform.localScale.x, transform.localScale.y), 0, Vector2.down, 5f,
+            if (Physics2D.BoxCast(pos, new Vector2(transform.localScale.x, transform.localScale.y), 0, Vector2.down, 2f,
                     layerMaskPlayer))
             {
                 playerTrigger = true;
