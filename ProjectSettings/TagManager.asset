@@ -6,17 +6,19 @@ TagManager:
   tags:
   - Hit
   - Hittable
+  - Ground
+  - FallingSpike
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemy
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Geo
+  - Ground
+  - FallingSpike
+  - Player
   - 
   - 
   - 
