@@ -8,7 +8,7 @@ public class AttackBox : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "hittable")
+        if (other.gameObject.tag == "Hittable")
         {
             other.gameObject.tag = "Hit";                  
         }

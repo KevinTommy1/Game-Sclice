@@ -4,7 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - hittable
+  - Hit
+  - Hittable
   layers:
   - Default
   - TransparentFX

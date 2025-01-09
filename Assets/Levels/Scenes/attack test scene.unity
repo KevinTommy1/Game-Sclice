@@ -353,6 +353,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4259807040710730211, guid: 60bb5daa3433ccc499c527ef14aaacd1, type: 3}
+      propertyPath: m_TagString
+      value: Hit
+      objectReference: {fileID: 0}
     - target: {fileID: 9020279265947866888, guid: 60bb5daa3433ccc499c527ef14aaacd1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.8239931
@@ -563,7 +567,7 @@ GameObject:
   - component: {fileID: 2137148702}
   m_Layer: 0
   m_Name: rock be like
-  m_TagString: hittable
+  m_TagString: Hittable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
