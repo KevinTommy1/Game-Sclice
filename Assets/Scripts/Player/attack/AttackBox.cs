@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 
 public class AttackBox : MonoBehaviour
@@ -9,7 +10,7 @@ public class AttackBox : MonoBehaviour
     {
         if (other.gameObject.tag == "hittable")
         {
-            other.gameObject.GetComponent<Hittable>();
+            other.gameObject.tag = "Hit";                  
         }
     }
 }
