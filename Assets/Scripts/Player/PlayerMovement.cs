@@ -21,9 +21,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground Check")] 
     [SerializeField] private float extraHeight = 0.25f;
     [SerializeField] private LayerMask whatIsGround;
-
-    [Header("Camera Stuff")] 
-    [SerializeField] private GameObject cameraFollowGO;
     
     [Header("Particles")]
     [SerializeField] private ParticleSystem movementParticles;
@@ -62,7 +59,6 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
         //playerDash = GetComponent<PlayerDash>();
-        //cameraFollowObject = cameraFollowGO.GetComponent<CameraFollowObject>();
 
         print(CameraManager.instance);
          fallSpeedYDampingChangeThreshold = 
@@ -115,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            //.SetBool("isWalking", false);
+            //anim.SetBool("isWalking", false);
             movementParticles.Stop();
         }
 
@@ -212,7 +208,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator Reset()
     {
         yield return null;
-        //.ResetTrigger("land");
+        //anim.ResetTrigger("land");
     }
 
     #endregion
@@ -253,7 +249,6 @@ public class PlayerMovement : MonoBehaviour
             IsFacingRight = !IsFacingRight;
 
             //turn the camera follow object
-            //cameraFollowObject.CallTurn();
             CameraManager.instance.CallCameraFaceDirection();
         }
         else
@@ -263,7 +258,6 @@ public class PlayerMovement : MonoBehaviour
             IsFacingRight = !IsFacingRight;
 
             //turn the camera follow object
-            //cameraFollowObject.CallTurn();
             CameraManager.instance.CallCameraFaceDirection();
         }
     }
