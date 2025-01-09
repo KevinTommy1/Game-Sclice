@@ -9,7 +9,7 @@ public class FallingSpike : MonoBehaviour
     [SerializeField] private bool isFalling;
 
     private float speed;
-    private bool hasStartedFalling = false;
+    private bool hasStartedFalling;
     private GameObject player;
 
     private void Start()
@@ -20,34 +20,26 @@ public class FallingSpike : MonoBehaviour
     private void Update()
     {
         Vector2 pos = new Vector2(transform.position.x, transform.position.y - transform.localScale.y / 2 - .1f);
-        if (Physics2D.BoxCast(pos, new Vector2(transform.localScale.x, transform.localScale.y), 0, Vector2.down, 10) &&
+        if (Physics2D.BoxCast(pos, new Vector2(transform.localScale.x, transform.localScale.y), 0, Vector2.down, 5f) &&
             !playerTrigger)
         {
-            if (Physics2D.BoxCast(pos, new Vector2(transform.localScale.x, transform.localScale.y), 0, Vector2.down, 10,
+            if (Physics2D.BoxCast(pos, new Vector2(transform.localScale.x, transform.localScale.y), 0, Vector2.down, 2f,
                     layerMaskPlayer))
             {
                 playerTrigger = true;
+                hasStartedFalling = true;
             }
-        }
-
-        if (playerTrigger && !hasStartedFalling)
-        {
-            hasStartedFalling = true;
         }
 
         if (hasStartedFalling)
         {
-            if (Physics2D.Raycast(transform.position, Vector2.down, 10f, layerMaskPlayer) ||
-                Physics2D.Raycast(transform.position, Vector2.down, 10f, layerMaskGround))
-            {
-                isFalling = true;
-                transform.position += new Vector3(0, -20, 0) * (speed * Time.deltaTime);
-                speed += 0.004f;
-            }
-            else
+            isFalling = true;
+            transform.position += new Vector3(0, -20, 0) * (speed * Time.deltaTime);
+            speed += 0.004f;
+            if (Physics2D.Raycast(transform.position, Vector2.down, 0.5f, layerMaskGround))
             {
                 isFalling = false;
-                //can be destroyed
+                hasStartedFalling = false;
             }
         }
 
@@ -55,9 +47,7 @@ public class FallingSpike : MonoBehaviour
         {
             player.GetComponent<Health>().TakeDamage(1, Vector2.up, 5f, 1f);
         }
-        
-        Debug.DrawRay(transform.position, Vector2.down * 10f, Color.red);
-        
-    }
 
+        Debug.DrawRay(transform.position, Vector2.down * 10f, Color.red);
+    }
 }
