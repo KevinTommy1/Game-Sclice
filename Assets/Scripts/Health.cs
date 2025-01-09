@@ -57,4 +57,13 @@ public class Health : MonoBehaviour
         isInvincible = true;
         Invoke(nameof(ResetInvincibility), invincibilityDuration);
     }
+
+    public void GroundSpikeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 }
