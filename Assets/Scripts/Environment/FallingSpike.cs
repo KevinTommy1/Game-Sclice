@@ -27,12 +27,8 @@ public class FallingSpike : MonoBehaviour
                     layerMaskPlayer))
             {
                 playerTrigger = true;
+                hasStartedFalling = true;
             }
-        }
-
-        if (playerTrigger)
-        {
-            hasStartedFalling = true;
         }
 
         if (hasStartedFalling)
@@ -40,9 +36,10 @@ public class FallingSpike : MonoBehaviour
             isFalling = true;
             transform.position += new Vector3(0, -20, 0) * (speed * Time.deltaTime);
             speed += 0.004f;
-            if (Physics2D.Raycast(transform.position, Vector2.down, 1f, layerMaskGround))
+            if (Physics2D.Raycast(transform.position, Vector2.down, 0.5f, layerMaskGround))
             {
                 isFalling = false;
+                hasStartedFalling = false;
             }
         }
 
