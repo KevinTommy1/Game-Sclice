@@ -15,6 +15,10 @@ public class FallingSpike : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogError("Player not tagged");
+        }
     }
 
     private void Update()
@@ -49,5 +53,10 @@ public class FallingSpike : MonoBehaviour
         }
 
         Debug.DrawRay(transform.position, Vector2.down * 10f, Color.red);
+    }
+
+    private void DrawDebugRayPlayer()
+    {
+        //Debug.DrawRay();
     }
 }
