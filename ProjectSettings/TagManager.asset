@@ -8,6 +8,7 @@ TagManager:
   - FallingSpike
   - Spikes
   - SpawnPoint
+  - Spikes
   layers:
   - Default
   - TransparentFX
