@@ -7,18 +7,16 @@ public class RockHit : MonoBehaviour
 {
     [SerializeField] internal GameObject coin;
     [SerializeField] internal float TimesHit = 0;
-    void Start()
+
+    private void Update()
     {
-        
-    }
-    void Update()
-    {
-        if (this.gameObject.tag == "Hit")
+        if (gameObject.CompareTag("Hit"))
         {
             TimesHit += 1f;
-            this.gameObject.tag = "hittable";
+            gameObject.tag = "Hittable";
         }
-      switch(TimesHit)
+     
+        switch(TimesHit)
         {
             case 1:
                 CoinDrop(3);
@@ -31,18 +29,21 @@ public class RockHit : MonoBehaviour
                 break;
         }  
     }
-    internal void CoinDrop(float drops)
+
+    internal void CoinDrop(int drops)
     {
         for (int i = 0; i == drops; i++)
         {
-            Instantiate(coin, this.gameObject.transform.position, Quaternion.identity);
+            Instantiate(coin, gameObject.transform.position, Quaternion.identity);
         }
     }
-    internal void GeoBreak(float drops)
+    
+    internal void GeoBreak(int drops)
     {
         for (int i = 0; i == drops; i++)
         {
-            Instantiate(coin, this.gameObject.transform.position, Quaternion.identity);
+            Instantiate(coin, gameObject.transform.position, Quaternion.identity);
+            //anim.play("RockBreak");
         }
     }
 }
