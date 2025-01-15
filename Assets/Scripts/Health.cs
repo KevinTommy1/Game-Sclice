@@ -6,11 +6,13 @@ public class Health : MonoBehaviour
     [SerializeField] private bool isInvincible = false;
 
     private Rigidbody2D rb;
+    private GameObject player;
 
     
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        player = GameObject.FindWithTag("Player");
     }
     
     private void AddHealth(int amount)

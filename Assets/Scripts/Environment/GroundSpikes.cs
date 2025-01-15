@@ -6,28 +6,23 @@ using UnityEngine;
 public class GroundSpikes : MonoBehaviour
 {
     private GameObject player;
-    private Vector3 previousPosition;
+    private GameObject spawnPoint;
+
 
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
+        spawnPoint = GameObject.FindWithTag("SpawnPoint");
     }
 
-    void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D col)
     {
-        if (collision.gameObject.CompareTag("Spikes"))
+        GameObject whatHit = col.gameObject;
+        if (whatHit.CompareTag("Player"))
         {
-            transform.position = previousPosition;
             player.GetComponent<Health>().GroundSpikeDamage(1);
-        }
-    }
-
-
-    void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            previousPosition = transform.position;
+            Debug.Log("Player took damage");
+            player.transform.position = spawnPoint.transform.position;
         }
     }
 }
