@@ -8,6 +8,8 @@ TagManager:
   - Hittable
   - Ground
   - FallingSpike
+  - Spikes
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX
@@ -19,7 +21,7 @@ TagManager:
   - Ground
   - FallingSpike
   - Player
-  - 
+  - Spikes
   - 
   - 
   - 
