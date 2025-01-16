@@ -238,6 +238,11 @@ public class PlayerMovement : MonoBehaviour
         {
             Turn();
         }
+
+        if (IsFacingRight)
+        {
+            print("Right");
+        }
     }
 
     private void Turn()
@@ -247,6 +252,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
             IsFacingRight = !IsFacingRight;
+            print("Left"); //
 
             //turn the camera follow object
             CameraManager.instance.CallCameraFaceDirection();
@@ -256,6 +262,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
             IsFacingRight = !IsFacingRight;
+            print("Right");
 
             //turn the camera follow object
             CameraManager.instance.CallCameraFaceDirection();
