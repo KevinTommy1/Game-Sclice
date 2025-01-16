@@ -7,6 +7,7 @@ public class FallingSpike : MonoBehaviour
     [SerializeField] private LayerMask layerMaskGround;
     [SerializeField] private bool playerTrigger = false;
     [SerializeField] private bool isFalling;
+    [SerializeField] private bool isNotHit;
 
     private float speed;
     private bool hasStartedFalling;
@@ -15,6 +16,10 @@ public class FallingSpike : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogError("Player not tagged");
+        }
     }
 
     private void Update()
@@ -36,7 +41,7 @@ public class FallingSpike : MonoBehaviour
             isFalling = true;
             transform.position += new Vector3(0, -20, 0) * (speed * Time.deltaTime);
             speed += 0.004f;
-            if (Physics2D.Raycast(transform.position, Vector2.down, 0.5f, layerMaskGround))
+            if (Physics2D.Raycast(transform.position, Vector2.down, 0.1f, layerMaskGround))
             {
                 isFalling = false;
                 hasStartedFalling = false;
@@ -45,9 +50,18 @@ public class FallingSpike : MonoBehaviour
 
         if (isFalling && Physics2D.Raycast(transform.position, Vector2.down, 1f, layerMaskPlayer))
         {
-            player.GetComponent<Health>().TakeDamage(1, Vector2.up, 5f, 1f);
+            if (!isNotHit)
+            {
+                player.GetComponent<Health>().TakeDamage(1, Vector2.right, 5f, 1f);
+                isNotHit = true;
+            }
         }
 
         Debug.DrawRay(transform.position, Vector2.down * 10f, Color.red);
+    }
+
+    private void DrawDebugRayPlayer()
+    {
+        //Debug.DrawRay();
     }
 }
