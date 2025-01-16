@@ -25,19 +25,20 @@ public class RockHit : MonoBehaviour
         }  
     }
 
-    internal void CoinDrop(int drops)
+    private void CoinDrop(int drops)
     {
-        for (int i = 0; i == drops; i++)
+        for (int i = 0; i < drops; i++)
         {
             Instantiate(coin, gameObject.transform.position, Quaternion.identity);
         }
     }
-    
-    internal void GeoBreak(int drops)
+
+    private void GeoBreak(int drops)
     {
-        for (int i = 0; i == drops; i++)
+        for (int i = 0; i < drops; i++)
         {
             Instantiate(coin, gameObject.transform.position, Quaternion.identity);
+            Destroy(gameObject);
             //anim.play("RockBreak");
         }
     }
