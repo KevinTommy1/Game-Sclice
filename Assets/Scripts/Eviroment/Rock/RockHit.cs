@@ -7,15 +7,10 @@ public class RockHit : MonoBehaviour
 {
     [SerializeField] internal GameObject coin;
     [SerializeField] internal float TimesHit = 0;
-
-    private void Update()
+    
+    public void Damage(float damageAmount)
     {
-        if (gameObject.CompareTag("Hit"))
-        {
-            TimesHit += 1f;
-            gameObject.tag = "Hittable";
-        }
-     
+        TimesHit += damageAmount;
         switch(TimesHit)
         {
             case 1:

@@ -11,7 +11,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float damageAmount = 1f;
     [SerializeField] private float timeBtwAttacks = 0.15f;
 
-    private List<IDamageable> iDamageables = new List<IDamageable>();
+    private List<RockHit> rockHits = new List<RockHit>();
 
     public bool ShouldBeDamaging { get; private set; } = false;
 
@@ -25,9 +25,7 @@ public class PlayerAttack : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
-
         attackTimeCounter = timeBtwAttacks;
-
         playerImpulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
@@ -38,46 +36,37 @@ public class PlayerAttack : MonoBehaviour
             attackTimeCounter = 0f;
 
             //trigger the attack animation
+            attackCoroutine = StartCoroutine(DamageWhileSlashIsActive());
             anim.SetTrigger("attack");
         }
            
         attackTimeCounter += Time.deltaTime;
     }
 
-    public IEnumerator DamageWhileSlashIsActive()
+    private IEnumerator DamageWhileSlashIsActive()
     {
         ShouldBeDamaging = true;
-
+        rockHits.Clear();
         while (ShouldBeDamaging)
         {
+            attackableLayer = LayerMask.GetMask("Attackable");
             hits = Physics2D.CircleCastAll(attackTransform.position, attackRange, transform.right, 0f, attackableLayer);
-
-            for (int i = 0; i < hits.Length; i++)
+            
+            foreach (var t in hits)
             {
-                IDamageable iDamageable = hits[i].collider.gameObject.GetComponent<IDamageable>();
+                RockHit rock = t.collider.gameObject.GetComponent<RockHit>();
 
                 //we found a damageable collider
-                if (iDamageable != null && !iDamageables.Contains(iDamageable))
+                if (rock != null && !rockHits.Contains(rock))
                 {
                     //apply damage
-
-                    iDamageable.Damage(damageAmount);
-                    iDamageables.Add(iDamageable);
+                    rock.Damage(damageAmount);
+                    rockHits.Add(rock);
                 }
             }
-
             yield return null;
         }
-
-        ReturnAttackablesToDamageable();
-
         playerImpulseSource.GenerateImpulseWithForce(0.25f);
-
-    }
-
-    private void ReturnAttackablesToDamageable()
-    {
-        iDamageables.Clear();
     }
 
     private void OnDrawGizmosSelected()
