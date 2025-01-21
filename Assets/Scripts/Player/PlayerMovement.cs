@@ -1,7 +1,4 @@
-// todo: why does trackedOffset rotate with player? can cameraFollowGO be Removed? alternatively research if cameraFollowObject can be copied over
-
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -27,23 +24,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private ParticleSystem landParticles;
 
     public bool IsFacingRight { get; set; }
-
-    // PlayerDash playerDash;
     private Rigidbody2D rb;
     private Collider2D coll;
     private Animator anim;
     private float moveInput;
-
     private bool isJumping;
     [SerializeField]private bool isFalling;
     private float jumpTimeCounter;
-
     private RaycastHit2D groundHit;
-
     private Coroutine resetTriggerCoroutine;
-
     private float fallSpeedYDampingChangeThreshold;
-
 
     #region Unity Callback Functions
 
@@ -58,9 +48,6 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
-        //playerDash = GetComponent<PlayerDash>();
-
-        print(CameraManager.instance);
          fallSpeedYDampingChangeThreshold = 
              CameraManager.instance._fallSpeedYDampingChangeThreshold;
     }
@@ -75,7 +62,6 @@ public class PlayerMovement : MonoBehaviour
          {
              CameraManager.instance.LerpYDamping(true);
          }
-        
          //if we are standing still or moving up
          if (rb.velocity.y >= 0f && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling)
          {
@@ -89,7 +75,6 @@ public class PlayerMovement : MonoBehaviour
     {
         //clamp the player's fall speed in the Y (I set a super high upper limit to ensure we can have a fast jump speed if we want)
         rb.velocity = new Vector3(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxFallSpeed, maxFallSpeed * 10));
-
         if (moveInput > 0 || moveInput < 0)
         {
             TurnCheck();
@@ -103,7 +88,6 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         moveInput = UserInput.instance.moveInput.x;
-
         if (moveInput > 0 || moveInput < 0)
         {
             //anim.SetBool("isWalking", true);
@@ -114,7 +98,6 @@ public class PlayerMovement : MonoBehaviour
             //anim.SetBool("isWalking", false);
             movementParticles.Stop();
         }
-
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
     }
 
@@ -126,7 +109,6 @@ public class PlayerMovement : MonoBehaviour
             isJumping = true;
             jumpTimeCounter = jumpTime;
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-
             //anim.SetTrigger("jump");
         }
 
@@ -161,7 +143,6 @@ public class PlayerMovement : MonoBehaviour
             //anim.SetTrigger("land");
             resetTriggerCoroutine = StartCoroutine(Reset());
         }
-
         DrawGroundCheck();
     }
 
@@ -194,15 +175,9 @@ public class PlayerMovement : MonoBehaviour
                 isFalling = false;
                 return true;
             }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
             return false;
         }
+        return false;
     }
 
     private IEnumerator Reset()
@@ -238,11 +213,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Turn();
         }
-
-        if (IsFacingRight)
-        {
-            print("Right");
-        }
     }
 
     private void Turn()
@@ -252,8 +222,6 @@ public class PlayerMovement : MonoBehaviour
             Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
             IsFacingRight = !IsFacingRight;
-            print("Left"); //
-
             //turn the camera follow object
             CameraManager.instance.CallCameraFaceDirection();
         }
@@ -262,8 +230,6 @@ public class PlayerMovement : MonoBehaviour
             Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
             IsFacingRight = !IsFacingRight;
-            print("Right");
-
             //turn the camera follow object
             CameraManager.instance.CallCameraFaceDirection();
         }
