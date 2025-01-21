@@ -4985,11 +4985,11 @@ GameObject:
   - component: {fileID: 8224430303388929554}
   - component: {fileID: 7950540433832788372}
   - component: {fileID: 7308817392057829323}
-  - component: {fileID: 7745554639221944140}
-  - component: {fileID: 7694657973213217335}
   - component: {fileID: 6414303578792206503}
+  - component: {fileID: 7694657973213217335}
+  - component: {fileID: 7745554639221944140}
   m_Layer: 9
-  m_Name: TestPlayer
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5012,6 +5012,7 @@ Transform:
   - {fileID: 5749268566594801015}
   - {fileID: 5772784125787013898}
   - {fileID: 8825105540093184992}
+  - {fileID: 8355264374150198043}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3572475263273016210
@@ -5163,6 +5164,34 @@ MonoBehaviour:
   movementParticles: {fileID: 1569524439862407739}
   landParticles: {fileID: 6999832603594758554}
   isFalling: 0
+--- !u!114 &6414303578792206503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3404275623777843720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddbbcc7b5d214f87963597eff1b55aaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 5
+  isInvincible: 0
+--- !u!114 &7694657973213217335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3404275623777843720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad421924d5fb8db4f8fa35dd1c8b69da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activate: 0
+  continuous: 0
 --- !u!95 &7745554639221944140
 Animator:
   serializedVersion: 5
@@ -5184,35 +5213,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7694657973213217335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3404275623777843720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad421924d5fb8db4f8fa35dd1c8b69da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activate: 0
-  continuous: 0
---- !u!114 &6414303578792206503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3404275623777843720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddbbcc7b5d214f87963597eff1b55aaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 5
-  isInvincible: 0
-  initialPosition: {x: 4.11, y: -2.55, z: 0}
 --- !u!1 &4412831588029657156
 GameObject:
   m_ObjectHideFlags: 0
@@ -10158,6 +10158,37 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.4, y: -1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9020279265947866888}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4665194170514378394
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8355264374150198043}
+  m_Layer: 9
+  m_Name: AttackBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8355264374150198043
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4665194170514378394}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
