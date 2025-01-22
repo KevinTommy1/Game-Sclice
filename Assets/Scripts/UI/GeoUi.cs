@@ -1,11 +1,11 @@
 using UnityEngine;
-using TMPro;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class GeoUi : MonoBehaviour
 {
-    [SerializeField] TMP_Text GeoAmount;
-    [SerializeField] TMP_Text GeoAdded;
+    [SerializeField] Text GeoAmount;
+    [SerializeField] Text GeoAdded;
     [SerializeField] Color EventualColor;
     [SerializeField] private float DelayBeforeAdding = 2.5f;
     [SerializeField] private float AddDuration = 0.3f;
