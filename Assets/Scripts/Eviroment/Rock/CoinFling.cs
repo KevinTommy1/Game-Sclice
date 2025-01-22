@@ -9,7 +9,7 @@ public class CoinFling : MonoBehaviour
    
     void Start()
     {
-        geoUi = GameObject.Find("GeoUi").GetComponent<GeoUi>();
+        geoUi = GameObject.Find("UI").GetComponent<GeoUi>();
         Vector2 flingDirection = Random.insideUnitCircle.normalized;
         float flingForce = Random.Range(MinimumFlingForce, MaximumFlingForce);
         rb.AddForce(flingDirection * flingForce);
