@@ -4,6 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Hit
+  - Hittable
   - Ground
   - FallingSpike
   - Spikes
@@ -21,7 +23,7 @@ TagManager:
   - FallingSpike
   - Player
   - Spikes
-  - 
+  - Attackable
   - 
   - 
   - 
