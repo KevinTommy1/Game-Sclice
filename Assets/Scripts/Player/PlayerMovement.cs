@@ -274,7 +274,6 @@ public class PlayerMovement : MonoBehaviour
         anim.ResetTrigger("Walk");
         anim.ResetTrigger("Land");       
         anim.ResetTrigger("Jump");
-        anim.ResetTrigger("Attack");
         anim.ResetTrigger("Turn");
         
         anim.SetTrigger(trigger);

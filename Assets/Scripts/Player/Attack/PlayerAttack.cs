@@ -36,8 +36,8 @@ public class PlayerAttack : MonoBehaviour
             attackTimeCounter = 0f;
 
             //trigger the attack animation
+            anim.SetTrigger("Attack");
             attackCoroutine = StartCoroutine(DamageWhileSlashIsActive());
-            anim.SetTrigger("attack");
         }
            
         attackTimeCounter += Time.deltaTime;
