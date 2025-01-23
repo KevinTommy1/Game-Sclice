@@ -4987,7 +4987,7 @@ GameObject:
   - component: {fileID: 7308817392057829323}
   - component: {fileID: 6414303578792206503}
   - component: {fileID: 7694657973213217335}
-  - component: {fileID: 115879613054036998}
+  - component: {fileID: 734320126414769828}
   - component: {fileID: 7745554639221944140}
   m_Layer: 9
   m_Name: Player
@@ -5201,7 +5201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activate: 0
   continuous: 0
---- !u!114 &115879613054036998
+--- !u!114 &734320126414769828
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

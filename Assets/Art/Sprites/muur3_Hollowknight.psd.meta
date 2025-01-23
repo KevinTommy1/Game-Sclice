@@ -184,10 +184,10 @@ TextureImporter:
       name: muur3_Hollowknight_4
       rect:
         serializedVersion: 2
-        x: 706
-        y: 30
-        width: 1294
-        height: 785
+        x: 1086
+        y: 1276
+        width: 904
+        height: 671
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -205,6 +205,27 @@ TextureImporter:
       name: muur3_Hollowknight_5
       rect:
         serializedVersion: 2
+        x: 706
+        y: 30
+        width: 1294
+        height: 785
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 436b6e699bbd03a4ebba2255b74a08f4
+      internalID: 275408992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muur3_Hollowknight_6
+      rect:
+        serializedVersion: 2
         x: 1413
         y: 28
         width: 23
@@ -216,8 +237,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 436b6e699bbd03a4ebba2255b74a08f4
-      internalID: 275408992
+      spriteID: 7bbe5cd10c2d3a04c865a42c1ede1d89
+      internalID: -276270138
       vertices: []
       indices: 
       edges: []
@@ -239,6 +260,7 @@ TextureImporter:
       muur3_Hollowknight_3: -1518360562
       muur3_Hollowknight_4: 1265819073
       muur3_Hollowknight_5: 275408992
+      muur3_Hollowknight_6: -276270138
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

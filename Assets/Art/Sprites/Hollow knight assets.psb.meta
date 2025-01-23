@@ -96,7 +96,7 @@ ScriptedImporter:
   rigSpriteImportData:
   - name: Hollow knight assets_0
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -117,7 +117,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   - name: Hollow knight assets_1
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -138,7 +138,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   - name: Hollow knight assets_2
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -159,7 +159,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   - name: Hollow knight assets_3
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -180,7 +180,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   - name: Hollow knight assets_4
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -201,7 +201,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   - name: Hollow knight assets_5
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -222,15 +222,15 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   - name: Hollow knight assets_6
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 1023
-      y: 646
+      y: 699
       width: 956
-      height: 687
+      height: 688
     spriteID: 6921b7cc5c963734186cc985ece239ab
     spriteBone: []
     spriteOutline: []
@@ -239,11 +239,11 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 1023, y: 646}
+    uvTransform: {x: 1023, y: 699}
     spritePosition: {x: 0, y: 0}
   - name: Hollow knight assets_7
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
