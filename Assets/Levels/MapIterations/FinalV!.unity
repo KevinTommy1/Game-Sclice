@@ -4498,6 +4498,14 @@ PrefabInstance:
       propertyPath: spawnPoint
       value: 
       objectReference: {fileID: 1165428992}
+    - target: {fileID: 7308817392057829323, guid: c8769dd1783e070488120ef90082eed9, type: 3}
+      propertyPath: jumpTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7308817392057829323, guid: c8769dd1783e070488120ef90082eed9, type: 3}
+      propertyPath: jumpForce
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 9020279265947866888, guid: c8769dd1783e070488120ef90082eed9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.94

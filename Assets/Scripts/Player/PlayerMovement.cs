@@ -120,7 +120,9 @@ public class PlayerMovement : MonoBehaviour
         {
             if (jumpTimeCounter > 0 && isJumping)
             {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                float jumpPercentage = 1 - (jumpTimeCounter / jumpTime);
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce * (1 - jumpPercentage));
+                
                 jumpTimeCounter -= Time.deltaTime;
             }
             else if (jumpTimeCounter == 0)
@@ -137,6 +139,7 @@ public class PlayerMovement : MonoBehaviour
         //button was released this frame
         if (UserInput.instance.controls.Jumping.Jump.WasReleasedThisFrame())
         {
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Min(rb.velocity.y, jumpForce / 2));
             isJumping = false;
             isFalling = true;
         }
