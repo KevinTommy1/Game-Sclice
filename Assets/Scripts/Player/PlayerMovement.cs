@@ -91,11 +91,13 @@ public class PlayerMovement : MonoBehaviour
         if (moveInput > 0 || moveInput < 0)
         {
             //anim.SetBool("isWalking", true);
+            HandleTrigger("Walk");
             movementParticles.Play();
         }
         else
         {
             //anim.SetBool("isWalking", false);
+            HandleTrigger("Idle");
             movementParticles.Stop();
         }
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
@@ -110,6 +112,7 @@ public class PlayerMovement : MonoBehaviour
             jumpTimeCounter = jumpTime;
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             //anim.SetTrigger("jump");
+            HandleTrigger("Jump");
         }
 
         //button is being held
@@ -141,6 +144,7 @@ public class PlayerMovement : MonoBehaviour
         if (!isJumping && CheckForLand())
         {
             //anim.SetTrigger("land");
+            HandleTrigger("Land");
             resetTriggerCoroutine = StartCoroutine(Reset());
         }
         DrawGroundCheck();
@@ -156,10 +160,12 @@ public class PlayerMovement : MonoBehaviour
             whatIsGround);
         if (groundHit.collider != null)
         {
+            anim.SetBool("IsGrounded", true);
             return true;
         }
         else
         {
+            anim.SetBool("IsGrounded", false);
             return false;
         }
     }
@@ -219,7 +225,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsFacingRight)
         {
-            Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
+            Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
             IsFacingRight = !IsFacingRight;
             //turn the camera follow object
@@ -227,7 +233,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
+            Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
             IsFacingRight = !IsFacingRight;
             //turn the camera follow object
@@ -256,6 +262,21 @@ public class PlayerMovement : MonoBehaviour
             Vector2.down * (coll.bounds.extents.y + extraHeight), rayColor);
         Debug.DrawRay(coll.bounds.center - new Vector3(coll.bounds.extents.x, coll.bounds.extents.y + extraHeight),
             Vector2.right * (coll.bounds.extents.x * 2), rayColor);
+    }
+
+    #endregion
+
+    #region animations triggers
+
+    public void HandleTrigger(string trigger)
+    {
+        anim.ResetTrigger("Idle");
+        anim.ResetTrigger("Walk");
+        anim.ResetTrigger("Land");       
+        anim.ResetTrigger("Jump");
+        anim.ResetTrigger("Turn");
+        
+        anim.SetTrigger(trigger);
     }
 
     #endregion

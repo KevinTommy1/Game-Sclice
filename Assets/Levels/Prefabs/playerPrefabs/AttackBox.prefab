@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7101744985360684451}
   - component: {fileID: 911130412068057402}
-  - component: {fileID: 3291857369746067079}
   m_Layer: 0
   m_Name: AttackBox
   m_TagString: Untagged
@@ -86,15 +85,3 @@ PolygonCollider2D:
       - {x: 0.9849043, y: 1.2398038}
       - {x: 1.0018289, y: 1.1890335}
   m_UseDelaunayMesh: 0
---- !u!114 &3291857369746067079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1067482323659309206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1da34465a96e21b4c995bc8c27cb891d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

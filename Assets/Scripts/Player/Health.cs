@@ -19,7 +19,6 @@ public class Health : MonoBehaviour
         player = GameObject.FindWithTag("Player");
     }
 
-
     private void Update()
     {
         if (health <= 0)
