@@ -1,0 +1,703 @@
+fileFormatVersion: 2
+guid: d05e234ea4af8404bb7ba4baff506cda
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__0
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 823
+        width: 114
+        height: 230
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6248cbe707fa7041a0a9dcf5a4ebe85
+      internalID: 2052988372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__1
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 823
+        width: 114
+        height: 230
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e39f0ce8f806a944a71950b9a88fb76
+      internalID: 904247835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__2
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 824
+        width: 114
+        height: 230
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 351da87fa2b6cf345aacf801cd847150
+      internalID: 151067888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__3
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 824
+        width: 114
+        height: 230
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbd196c901981cf408b3a723f61bc977
+      internalID: 1922879784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__4
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 825
+        width: 114
+        height: 229
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09b31a5b67d518a47bd0a4da823fa87f
+      internalID: 458650925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__5
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 824
+        width: 115
+        height: 230
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ff044e472bcaa34f967eb9475049d0f
+      internalID: -116637808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__6
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 590
+        width: 123
+        height: 218
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e832adc5198d6f141bf5f61fd1903b4e
+      internalID: 1908404703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__7
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 590
+        width: 125
+        height: 218
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c600eac983ad2ea4d80bca5bb6ec3f86
+      internalID: 457769550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__8
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 590
+        width: 124
+        height: 218
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8573c97e050ac4142857437242fed077
+      internalID: 1240652070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__9
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 591
+        width: 124
+        height: 216
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f42d2b94fcdc094787b9e0a18f97000
+      internalID: -1083147818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__10
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 327
+        width: 114
+        height: 230
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b55b669c44eeeed4fa026b1c983bea4a
+      internalID: 1054546553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__11
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 327
+        width: 117
+        height: 224
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45f75dff5c4ce5648b26501b06b1b129
+      internalID: -1711765295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__12
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 327
+        width: 118
+        height: 215
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7c99b6acc88d8d4aa89732ce305a0ba
+      internalID: 1590300246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__13
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 326
+        width: 125
+        height: 223
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db455876629c2054e83bd424d27a438d
+      internalID: -962048076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__14
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 329
+        width: 125
+        height: 222
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d97d50abed394e449aa7b32e09d3575
+      internalID: 2072576236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__15
+      rect:
+        serializedVersion: 2
+        x: 659
+        y: 327
+        width: 119
+        height: 227
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47fd8f0340efe6a4c8abec51b7960f31
+      internalID: 738085767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__16
+      rect:
+        serializedVersion: 2
+        x: 793
+        y: 329
+        width: 135
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65b7571115705c2499ae67dc8c7fd67d
+      internalID: -602168870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__17
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 329
+        width: 136
+        height: 214
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b778313e1439d34a945eef6c1280211
+      internalID: -1213883847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__18
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 329
+        width: 143
+        height: 213
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a02b2265f7bd8a24e85d73b0f72bbe99
+      internalID: -337139180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__21
+      rect:
+        serializedVersion: 2
+        x: 1215
+        y: 329
+        width: 141
+        height: 212
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34be999071c96b841aa1157208355160
+      internalID: 568217437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__23
+      rect:
+        serializedVersion: 2
+        x: 1359
+        y: 334
+        width: 117
+        height: 212
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1620ec65e8fe33e4abac1030615854d4
+      internalID: -773697777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__24
+      rect:
+        serializedVersion: 2
+        x: 1507
+        y: 334
+        width: 115
+        height: 224
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0ba1ca4b9b797d4da57b8afb4c3bcce
+      internalID: 429947824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__31
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 48
+        width: 131
+        height: 209
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d97363e594ccd64798dffb36efa8830
+      internalID: -1092746219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__33
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 49
+        width: 139
+        height: 209
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b5791d4ea75cb84487f3b711081f5e0
+      internalID: 1923711438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__36
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 47
+        width: 149
+        height: 209
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9d2a9d4352abaa499f80e80eb49eeee
+      internalID: -1365124330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hollowknight_characterspritesheet__40
+      rect:
+        serializedVersion: 2
+        x: 488
+        y: 49
+        width: 146
+        height: 209
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec49a74d662f54e4192d9252b01f8c8b
+      internalID: 2016939718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Hollowknight_characterspritesheet__0: 2052988372
+      Hollowknight_characterspritesheet__1: 904247835
+      Hollowknight_characterspritesheet__10: 1054546553
+      Hollowknight_characterspritesheet__11: -1711765295
+      Hollowknight_characterspritesheet__12: 1590300246
+      Hollowknight_characterspritesheet__13: -962048076
+      Hollowknight_characterspritesheet__14: 2072576236
+      Hollowknight_characterspritesheet__15: 738085767
+      Hollowknight_characterspritesheet__16: -602168870
+      Hollowknight_characterspritesheet__17: -1213883847
+      Hollowknight_characterspritesheet__18: -337139180
+      Hollowknight_characterspritesheet__19: 1167232277
+      Hollowknight_characterspritesheet__2: 151067888
+      Hollowknight_characterspritesheet__20: 1238815956
+      Hollowknight_characterspritesheet__21: 568217437
+      Hollowknight_characterspritesheet__22: -1366139804
+      Hollowknight_characterspritesheet__23: -773697777
+      Hollowknight_characterspritesheet__24: 429947824
+      Hollowknight_characterspritesheet__25: -1109353569
+      Hollowknight_characterspritesheet__26: 352107380
+      Hollowknight_characterspritesheet__27: 2137565260
+      Hollowknight_characterspritesheet__28: 1429053268
+      Hollowknight_characterspritesheet__29: -632153268
+      Hollowknight_characterspritesheet__3: 1922879784
+      Hollowknight_characterspritesheet__30: 1503426424
+      Hollowknight_characterspritesheet__31: -1092746219
+      Hollowknight_characterspritesheet__32: 299177193
+      Hollowknight_characterspritesheet__33: 1923711438
+      Hollowknight_characterspritesheet__34: 827216469
+      Hollowknight_characterspritesheet__35: 1855404626
+      Hollowknight_characterspritesheet__36: -1365124330
+      Hollowknight_characterspritesheet__37: 447578482
+      Hollowknight_characterspritesheet__38: 282114523
+      Hollowknight_characterspritesheet__39: -744251699
+      Hollowknight_characterspritesheet__4: 458650925
+      Hollowknight_characterspritesheet__40: 2016939718
+      Hollowknight_characterspritesheet__41: 47597642
+      Hollowknight_characterspritesheet__42: -2019465601
+      Hollowknight_characterspritesheet__5: -116637808
+      Hollowknight_characterspritesheet__6: 1908404703
+      Hollowknight_characterspritesheet__7: 457769550
+      Hollowknight_characterspritesheet__8: 1240652070
+      Hollowknight_characterspritesheet__9: -1083147818
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
