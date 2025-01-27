@@ -4,8 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Hit
+  - Hittable
   - Ground
   - FallingSpike
+  - Spikes
+  - SpawnPoint
+  - Spikes
   layers:
   - Default
   - TransparentFX
@@ -17,8 +22,8 @@ TagManager:
   - Ground
   - FallingSpike
   - Player
-  - 
-  - 
+  - Spikes
+  - Attackable
   - 
   - 
   - 
