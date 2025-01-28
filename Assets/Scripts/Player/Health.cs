@@ -77,7 +77,7 @@ public class Health : MonoBehaviour
         ImageChanger();
     }
 
-    private void ImageChanger()
+    public void ImageChanger()
     {
         Image healthBarSpriteRenderer = healthBar.GetComponent<Image>();
 
