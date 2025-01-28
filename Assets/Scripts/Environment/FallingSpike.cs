@@ -52,7 +52,8 @@ public class FallingSpike : MonoBehaviour
         {
             if (!isNotHit)
             {
-                player.GetComponent<Health>().TakeDamage(1, Vector2.right, 5f, 1f);
+                health h = player.GetComponent<Health>().TakeDamage(1, Vector2.right, 5f, 1f);
+                h.ImageChanger();
                 isNotHit = true;
             }
         }
