@@ -39,7 +39,6 @@ public class RockHit : MonoBehaviour
         {
             Instantiate(coin, gameObject.transform.position, Quaternion.identity);
             Destroy(gameObject);
-            //anim.play("RockBreak");
         }
     }
 }

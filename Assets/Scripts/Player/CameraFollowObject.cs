@@ -13,6 +13,7 @@ public class CameraFollowObject : MonoBehaviour
     private PlayerMovement playerMovement;
     private bool lastFacingDirection = false;
     [SerializeField] private GameObject player;
+    
     void Start()
     {
         if (!TryGetComponent(out vcam))
@@ -21,8 +22,8 @@ public class CameraFollowObject : MonoBehaviour
         }
         else
         {
-        }
             transposer = vcam.GetCinemachineComponent<CinemachineFramingTransposer>();
+        }
 
         if (!player.TryGetComponent(out playerMovement))
         {
